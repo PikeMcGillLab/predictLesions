@@ -6,8 +6,8 @@
             {"name":"cmd", "kind":"required", "type":"choices={'tempMap', 'magMap', 'all'}"},
             {"name":"cmd2", "kind":"required","type":"choices={'thermalDose', 'tempMap', 'all'}"},
             {"name":"zipfile", "kind":"required", "type":"filepath=*.zip"},
-            {"name":"outFile", "kind":"required", "type":"folderpath"},
-            {"name":"RigidTransformFile", "kind":"required", "type":"filepath=*-RXYZ-IntraOp-To-PreTreat.ras,*-RXYZ-IntraOp-To-PreTreat.RAS"}
+            {"name":"RigidTransformFile", "kind":"required", "type":"filepath=*-RXYZ-IntraOp-To-PreTreat.ras,*-RXYZ-IntraOp-To-PreTreat.RAS"},
+            {"name":"outFile", "kind":"optional", "type":"folderpath"}
         ]
 }
 }

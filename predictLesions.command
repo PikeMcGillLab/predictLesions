@@ -4,150 +4,155 @@
 # It will create predicted lesion masks for thresholds 240, 230, 220, 210, 200, 160, 120 80 CEM43
 # These files can be used for DSC and volume comparison to T1 control lesions
 
-#### 	Start getSagittal Function	###############################################################
+#### 	Start getFiles Function	###############################################################
 # Sub-function to copy the relevant sagittal reference image from SPichardo
 # This function is a if/else block due to patient identifiers having different initials.
 # Note: This will have to updated as more patients are added
 
-#TODO: Merge getFiles with getSagittal
+#TODO: Merge getFiles with getFiles
 
-getSagittal(){
+getFiles(){
+
+# Start 	V2
+
+
 
 # File pathways
 path="/Volumes/Pikelab/SPichardo/input"
 end="study"
 
-if [[ $1 -eq 9001 ]];then
-	echo Fiesta for 9001 does not exist	
-elif [[ $1 -eq 9002 ]];then
-	cp ${path}/9002\ Ra\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files
-elif [[ $1 -eq 9003 ]];then
-	cp ${path}/9003\ Rb\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files
-elif [[ $1 -eq 9004 ]];then
-	cp ${path}/9004\ Ep\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files
-elif [[ $1 -eq 9005 ]];then
-	cp ${path}/9005\ Bg\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files
-elif [[ $1 -eq 9006 ]];then
-	cp ${path}/9006\ Eo\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files
-elif [[ $1 -eq 9008 ]];then
-	cp ${path}/9008\ Jo\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files
-elif [[ $1 -eq 9009 ]];then
-	cp ${path}/9009\ Crb\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files
-elif [[ $1 -eq 9010 ]];then
-	cp ${path}/9010\ Rr\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files
-elif [[ $1 -eq 9011 ]];then
-	cp ${path}/9011\ Bb\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files
-elif [[ $1 -eq 9013 ]];then
-	cp ${path}/9013\ Jd\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files
-elif [[ $1 -eq 9016 ]];then
-	cp ${path}/9016\ Eb\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files
-elif [[ $1 -eq 9020 ]];then
-	cp ${path}/9020\ Jl\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files
-elif [[ $1 -eq 9021 ]];then
-	cp ${path}/9021\ Wm\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files
-# Added for when needed for another patient
-#elif [[ $1 -eq 90xx ]];then
-#	cp ${path}/90xx\ XX\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files
+for i in {1..2}
+do
+	if [[ $1 -eq 9001 ]];then
+		echo Fiesta for 9001 does not exist	
+	elif [[ $1 -eq 9002 ]];then
+		cp ${path}/9002\ Ra\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9003 ]];then
+		cp ${path}/9003\ Rb\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9004 ]];then
+		cp ${path}/9004\ Ep\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9005 ]];then
+		cp ${path}/9005\ Bg\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9006 ]];then
+		cp ${path}/9006\ Eo\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9008 ]];then
+		cp ${path}/9008\ Jo\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9009 ]];then
+		cp ${path}/9009\ Crb\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9010 ]];then
+		cp ${path}/9010\ Rr\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9011 ]];then
+		cp ${path}/9011\ Bb\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9013 ]];then
+		cp ${path}/9013\ Jd\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9016 ]];then
+		cp ${path}/9016\ Eb\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9020 ]];then
+		cp ${path}/9020\ Jl\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9021 ]];then
+		cp ${path}/9021\ Wm\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
+	# Added for when needed for another patient
+	#elif [[ $1 -eq 90xx ]];then
+	#	cp ${path}/90xx\ XX\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
 
-else
-	echo The T1s do not exist for patient $1
-fi
-
-# Remove the white spaces from the name
-mv $2/Patient_Files/$1/Processed_Files/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Sagittal_Fiesta.nii.gz
-
-} #End function to get sagittal reference nifti
-
-#### 	End getSagittal Function	###############################################################
+	else
+		echo The fiesta files do not exist for patient $1
+	fi
 
 
+	# Remove the white spaces from the name
+	mv $2/Patient_Files/$1/Processed_Files/TMap${i}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}/Sagittal_Fiesta.nii.gz
 
-#### 	Start getFiles Function	###############################################################
-# Subfunction that copies the T1, T1 lesion mask (post op), post-op to pre-op matrix, and pre-op to intra-op conversion matrix.
-# T1 and masks are accessed in a if/else block because the identifier for each patient has a unique number.
+	# End 	V2
 
-#TODO: Merge getFiles with getSagittal
-getFiles() {
+	# Copy the T1, T1 lesion mask (post op), post-op to pre-op matrix, and pre-op to intra-op conversion matrix.
+	# T1 and masks are accessed in a if/else block because the identifier for each patient has a unique number.
 
-echo $pwd
+	#File pathways for the T1 and T1 mask files
 
-#File pathways for the T1 and T1 mask files
-T1_data="/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks"		
-T1="T1.nii.gz"
-mask="T1_lesion_mask_filled.nii.gz"
-Sam="/Volumes/Pikelab/SPichardo/Post_2_Pre_Matrix"
+	
 
-#Copy the Pre-Treat to Intra_Op matrix 
-cp /Volumes/Pikelab/SPichardo/$1-PreTreat-To-IntraOp.MAT TMap$2
+	T1_data="/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks"		
+	T1="T1.nii.gz"
+	mask="T1_lesion_mask_filled.nii.gz"
+	Sam="/Volumes/Pikelab/SPichardo/Post_2_Pre_Matrix"
+
+	#Copy the Pre-Treat to Intra_Op matrix 
+	cp /Volumes/Pikelab/SPichardo/$1-PreTreat-To-IntraOp.MAT $2/Patient_Files/$1/Processed_Files/TMap${i}
 
 
-if [[ $1 -eq 9001 ]];then
-	cp ${T1_data}/9001_SH-11692/anat/$T1 TMap${2}
-	cp ${T1_data}/9001_SH-11692/anat/$mask TMap${2}	
-elif [[ $1 -eq 9002 ]];then
-	cp ${T1_data}/9002_RA-11833/anat/${T1} TMap${2}
-	cp ${T1_data}/9002_RA-11833/anat/${mask} TMap${2}
-	cp ${Sam}/$1/T1_day1_2_T2_pre.mat TMap${2}
-elif [[ $1 -eq 9003 ]];then
-	cp ${T1_data}/9003_RB-12064/anat/$T1 TMap${2}
-	cp ${T1_data}/9003_RB-12064/anat/$mask TMap${2}
-	cp ${Sam}/$1/T1_day1_2_T2_pre.mat TMap${2}
-elif [[ $1 -eq 9004 ]];then
-	cp ${T1_data}/9004_EP-12203/anat/$T1 TMap${2}
-	cp ${T1_data}/9004_EP-12203/anat/$mask TMap${2}
-	cp ${Sam}/$1/T1_day1_2_T2_pre.mat TMap${2}
-elif [[ $1 -eq 9005 ]];then
-	cp ${T1_data}/9005_BG-13126/anat/$T1 TMap${2}
-	cp ${T1_data}/9005_BG-13126/anat/$mask TMap${2}
-	cp ${Sam}/$1/T1_day1_2_T2_pre.mat TMap${2}
-elif [[ $1 -eq 9006 ]];then
-	cp ${T1_data}/9006_EO-12487/anat/$T1 TMap${2}
-	cp ${T1_data}/9006_EO-12487/anat/$mask TMap${2}
-	cp ${Sam}/$1/T1_day1_2_T2_pre.mat TMap${2}
-elif [[ $1 -eq 9007 ]];then
-	cp ${T1_data}/9007_RB-12910/anat/$T1 TMap${2}
-	cp ${T1_data}/9007_RB-12910/anat/$mask TMap${2}
-	cp ${Sam}/$1/T1_day1_2_T2_pre.mat TMap${2}
-elif [[ $1 -eq 9008 ]];then
-	cp ${T1_data}/9008_JO-12667/anat/$T1 TMap${2}
-	cp ${T1_data}/9008_JO-12667/anat/$mask TMap${2}
-	cp ${Sam}/$1/T1_day1_2_T2_pre.mat TMap${2}
-elif [[ $1 -eq 9009 ]];then
-	cp ${T1_data}/9009_CRB-13043/anat/$T1 TMap${2}
-	cp $T1_data9009_CRB-13043/anat/$mask TMap${2}
-	cp ${Sam}/$1/T1_day1_2_T2_pre.mat TMap${2}
-elif [[ $1 -eq 9010 ]];then
-	cp ${T1_data}/9010_RR-13536/anat/$T1 TMap${2}
-	cp ${T1_data}/9010_RR-13536/anat/$mask TMap${2}
-	cp ${Sam}/$1/T1_day1_2_T2_pre.mat TMap${2}
-elif [[ $1 -eq 9011 ]];then
-	cp ${T1_data}/9011_BB-14148/anat/$T1 TMap${2}
-	cp ${T1_data}/9010_RR-13536/anat/$mask TMap${2}
-	cp ${Sam}/$1/T1_day1_2_T2_pre.mat TMap${2}
-elif [[ $1 -eq 9013 ]];then
-	cp ${T1_data}/9013_JD-13722/anat/$T1 TMap${2}
-	cp ${T1_data}/9013_JD-13722/anat/$mask TMap${2}
-	cp ${Sam}/$1/T1_day1_2_T2_pre.mat TMap${2}
-elif [[ $1 -eq 9016 ]];then
-	cp ${T1_data}/9016_EB-14450/anat/$T1 TMap${2}
-	cp ${T1_data}/9016_EB-14450/anat/$mask TMap${2}
-	#cp ${Sam}/$1/T1_day1_2_T2_pre.mat TMap${2}		#The T1 post to pre isn't available at time of wriitng
-elif [[ $1 -eq 9020 ]];then
-	cp ${T1_data}/9020_JL-14340/anat/$T1 TMap${2}
-	cp ${T1_data}/9020_JL-14340/anat/$mask TMap${2}
-	#cp ${Sam}/$1/T1_day1_2_T2_pre.mat TMap${2}		#The T1 post to pre isn't available at time of wriitng
-elif [[ $1 -eq 9021 ]];then
-	cp ${T1_data}/9021_WM-14455/anat/$T1 TMap${2}
-	cp ${T1_data}/9021_WM-14455/anat/$mask TMap${2}
-	#cp ${Sam}/$1/T1_day1_2_T2_pre.mat TMap${2}		#The T1 post to pre isn't available at time of wriitng
-#Added for future patient
-#elif [[ $1 -eq 90xx ]];then
-#	cp ${T1_data}/90xx_Xx-xxxxx/anat/$T1 TMap$2
-#	cp ${T1_data}/90xx_Xx-xxxxx/anat/$mask TMap$2
-#	cp ${Sam}/$1/T1_day1_2_T2_pre.mat TMap${2}
-else
-	echo The T1s do not exist for patient $1
-fi
+	if [[ $1 -eq 9001 ]];then
+		cp ${T1_data}/9001_SH-11692/anat/$T1 $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${T1_data}/9001_SH-11692/anat/$mask $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9002 ]];then
+		cp ${T1_data}/9002_RA-11833/anat/${T1} $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${T1_data}/9002_RA-11833/anat/${mask} $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${Sam}/$1/T1_day1_2_T2_pre.mat $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9003 ]];then
+		cp ${T1_data}/9003_RB-12064/anat/$T1 $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${T1_data}/9003_RB-12064/anat/$mask $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${Sam}/$1/T1_day1_2_T2_pre.mat $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9004 ]];then
+		cp ${T1_data}/9004_EP-12203/anat/$T1 $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${T1_data}/9004_EP-12203/anat/$mask $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${Sam}/$1/T1_day1_2_T2_pre.mat $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9005 ]];then
+		cp ${T1_data}/9005_BG-13126/anat/$T1 $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${T1_data}/9005_BG-13126/anat/$mask $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${Sam}/$1/T1_day1_2_T2_pre.mat $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9006 ]];then
+		cp ${T1_data}/9006_EO-12487/anat/$T1 $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${T1_data}/9006_EO-12487/anat/$mask $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${Sam}/$1/T1_day1_2_T2_pre.mat $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9007 ]];then
+		cp ${T1_data}/9007_RB-12910/anat/$T1 $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${T1_data}/9007_RB-12910/anat/$mask $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${Sam}/$1/T1_day1_2_T2_pre.mat $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9008 ]];then
+		cp ${T1_data}/9008_JO-12667/anat/$T1 $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${T1_data}/9008_JO-12667/anat/$mask $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${Sam}/$1/T1_day1_2_T2_pre.mat $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9009 ]];then
+		cp ${T1_data}/9009_CRB-13043/anat/$T1 $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp $T1_data9009_CRB-13043/anat/$mask $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${Sam}/$1/T1_day1_2_T2_pre.mat $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9010 ]];then
+		cp ${T1_data}/9010_RR-13536/anat/$T1 $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${T1_data}/9010_RR-13536/anat/$mask $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${Sam}/$1/T1_day1_2_T2_pre.mat $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9011 ]];then
+		cp ${T1_data}/9011_BB-14148/anat/$T1 $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${T1_data}/9010_RR-13536/anat/$mask $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${Sam}/$1/T1_day1_2_T2_pre.mat $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9013 ]];then
+		cp ${T1_data}/9013_JD-13722/anat/$T1 $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${T1_data}/9013_JD-13722/anat/$mask $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${Sam}/$1/T1_day1_2_T2_pre.mat $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9016 ]];then
+		cp ${T1_data}/9016_EB-14450/anat/$T1 $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${T1_data}/9016_EB-14450/anat/$mask $2/Patient_Files/$1/Processed_Files/TMap${i}
+		#cp ${Sam}/$1/T1_day1_2_T2_pre.mat $2/Patient_Files/$1/Processed_Files/TMap${i}		#The T1 post to pre isn't available at time of wriitng
+	elif [[ $1 -eq 9020 ]];then
+		cp ${T1_data}/9020_JL-14340/anat/$T1 $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${T1_data}/9020_JL-14340/anat/$mask $2/Patient_Files/$1/Processed_Files/TMap${i}
+		#cp ${Sam}/$1/T1_day1_2_T2_pre.mat $2/Patient_Files/$1/Processed_Files/TMap${i}		#The T1 post to pre isn't available at time of wriitng
+	elif [[ $1 -eq 9021 ]];then
+		cp ${T1_data}/9021_WM-14455/anat/$T1 $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${T1_data}/9021_WM-14455/anat/$mask $2/Patient_Files/$1/Processed_Files/TMap${i}
+		#cp ${Sam}/$1/T1_day1_2_T2_pre.mat $2/Patient_Files/$1/Processed_Files/TMap${i}		#The T1 post to pre isn't available at time of wriitng
+
+	#Added for future patient
+	#elif [[ $1 -eq 90xx ]];then
+	#	cp ${T1_data}/90xx_Xx-xxxxx/anat/$T1 $2/Patient_Files/$1/Processed_Files/TMap${i}
+	#	cp ${T1_data}/90xx_Xx-xxxxx/anat/$mask $2/Patient_Files/$1/Processed_Files/TMap${i}
+	#	cp ${Sam}/$1/T1_day1_2_T2_pre.mat $2/Patient_Files/$1/Processed_Files/TMap${i}
+	else
+		echo The T1s do not exist for patient $1
+	fi
+
+done
+
+
 } # End get files
 
 #### 	End getFiles Function		###############################################################
@@ -161,7 +166,11 @@ Volume() {
 
 #Start with basic housekeeping. Move magnitude maps and temperature maps to relevant directories, won't need them at this point
 
-getSagittal $1 $2		#Copy the reference images into the Processed_Files
+
+
+getFiles $1 $2		#Copy the reference images into the Processed_Files
+
+
 
 #TODO: When function is fully working, change cp to mv
 if [[ -f IntraOp-Magnitude1-Sonication_1.nii.gz ]] # If mag maps are available move them
@@ -175,8 +184,8 @@ then
 fi 
 
 
-cp -R Sagittal_Fiesta.nii.gz Processed_Files/TMap1
-cp -R Sagittal_Fiesta.nii.gz Processed_Files/TMap2
+#cp -R Sagittal_Fiesta.nii.gz Processed_Files/TMap1 #Not needed in V2
+#cp -R Sagittal_Fiesta.nii.gz Processed_Files/TMap2 #Not needed in V2
 
 
 # Overlay the highest value voxels throughout time axis into 3D space
@@ -225,7 +234,7 @@ then
 			# Square to try and compensate for moving of target by surgeon
 
 			Count=$(ls IntraOp-CEM240-*-Sonication_*_Overlay.nii.gz | grep -v '/$' | wc -l)	
-			echo $Count
+			#echo $Count
 		
 			for filename in IntraOp-CEM240-$i-Sonication_*_Overlay.nii.gz
 			do  
@@ -296,81 +305,81 @@ then
 			mv 3DSpot.nii.gz Auxilliary_Files
 			mv 3DSphere.nii.gz Auxilliary_Files
 
+
+			### Start V2 ##############
+
+			# Make the PostOp 2 IntraOp matrix and move files
+			convert_xfm -omat Post2Intra.mat -concat $1-PreTreat-To-IntraOp.MAT T1_day1_2_T2_pre.mat
+			mv $1-PreTreat-To-IntraOp.MAT DSC_Intermediates
+			mv T1_day1_2_T2_pre.mat DSC_Intermediates
+	
+			# Make the lesion mask and T1 image in IntraOp space
+			flirt -in T1.nii.gz -ref Sagittal_FIesta.nii.gz -interp nearestneighbour -applyxfm -init Post2Intra.mat -out T1_IntraSpace.nii.gz 			# Convert the T1 to IntraOp space
+			flirt -in T1_lesion_mask_filled.nii.gz -ref Sagittal_FIesta.nii.gz -interp nearestneighbour -applyxfm -init Post2Intra.mat -out T1_Mask_Intra.nii.gz	# Convert the T1 mask to IntraOp space
+			mv T1_lesion_mask_filled.nii.gz Analysis_Files
+			mv T1.nii.gz DSC_Intermediates	
+
+			####### end V2	#########
+
+
 			# Threshold the lesion mask
 			for ((var=80; var<200; var+=40))
 			do
 				fslmaths Predicted-Lesion-Mask.nii.gz -thr $var -bin Predicted-Lesion-Mask-${var}.nii.gz
 				#This is where the DSC merging could happen
+
+
+				##### Start V2	#########
+
+				fslmaths Predicted-Lesion-Mask-${var}.nii.gz -add T1_Mask_Intra.nii.gz -bin DSC_Denom_${var}.nii.gz
+				fslmaths Predicted-Lesion-Mask-${var}.nii.gz -add T1_Mask_Intra.nii.gz -thr 2 -bin DSC_Num_${var}.nii.gz
+				mv DSC_*.nii.gz Analysis_Files/DSC
+
+				####### end V2	#########
+
+
 			done #Threshold loop
 
 			for ((var=200; var<=240; var+=10))
 			do
 				fslmaths Predicted-Lesion-Mask.nii.gz -thr $var -bin Predicted-Lesion-Mask-${var}.nii.gz
 				#This is where the DSC merging could happen
+
+				##### Start V2	#########
+
+				fslmaths Predicted-Lesion-Mask-${var}.nii.gz -add T1_Mask_Intra.nii.gz -bin DSC_Denom_${var}.nii.gz
+				fslmaths Predicted-Lesion-Mask-${var}.nii.gz -add T1_Mask_Intra.nii.gz -thr 2 -bin DSC_Num_${var}.nii.gz
+				mv DSC_*.nii.gz Analysis_Files/DSC
+
+				####### end V2	#########
+
 			done #Threshold loop 
+
+			#### Start V2 ##########
+				
+				# More housekeeping
+				mv T1* DSC_Intermediates
+				mv Post2Intra.mat DSC_Intermediates
+				
+			###### end V2 ##########
 		
 			mv -f Predicted-Lesion-Mask* Analysis_Files #housekeeping
-
-           		 	cd .. #Go up one directory and start over for TMap 2
-    		fi #end TMap check
+       		 	cd .. #Go up one directory and start over for TMap 2
+   
+	 		fi #end TMap check
 	done # TMap for loop
+
 else #If thermal dose maps don't exist
+
 	echo Error: Thermal dose maps not made, may not have been made in MATLAB
 	exit 14
+
 fi
 } #End - Finished making predicted lesion masks
 
 #### 	End Volume Function		###############################################################
 
 
-
-#### 	Start DSC Function		###############################################################
-
-DSC() {
-
-# Now take all the needed files to make the DSC values
-# Need T1, T1 lesion, and matrix files
-
-for i in {1..2}
-do
-	getFiles $1 $i
-
-	cd TMap$i
-
-	# Make the PostOp 2 IntraOp matrix and move files
-	convert_xfm -omat Post2Intra.mat -concat $1-PreTreat-To-IntraOp.MAT T1_day1_2_T2_pre.mat
-	mv $1-PreTreat-To-IntraOp.MAT DSC_Intermediates
-	mv T1_day1_2_T2_pre.mat DSC_Intermediates
-	
-	# Make the lesion mask and T1 image in IntraOp space
-	flirt -in T1.nii.gz -ref Sagittal_FIesta.nii.gz -interp nearestneighbour -applyxfm -init Post2Intra.mat -out T1_IntraSpace.nii.gz 			# Convert the T1 to IntraOp space
-	flirt -in T1_lesion_mask_filled.nii.gz -ref Sagittal_FIesta.nii.gz -interp nearestneighbour -applyxfm -init Post2Intra.mat -out T1_Mask_Intra.nii.gz	# Convert the T1 mask to IntraOp space
-	mv T1_lesion_mask_filled.nii.gz Analysis_Files
-	mv T1.nii.gz DSC_Intermediates	
-
-	# Get the DSC files for each threshold
-	for ((var=80; var<200; var+=40))
-	do 
-		fslmaths Analysis_Files/Predicted-Lesion-Mask-${var}.nii.gz -add T1_Mask_Intra.nii.gz -bin DSC_Denom_${var}.nii.gz
-		fslmaths Analysis_Files/Predicted-Lesion-Mask-${var}.nii.gz -add T1_Mask_Intra.nii.gz -thr 2 -bin DSC_Num_${var}.nii.gz
-		mv DSC_*.nii.gz Analysis_Files/DSC
-	done
-
-	for ((var=200; var<=240; var+=10))
-	do
-		fslmaths Analysis_Files/Predicted-Lesion-Mask-${var}.nii.gz -add T1_Mask_Intra.nii.gz -bin DSC_Denom_${var}.nii.gz
-		fslmaths Analysis_Files/Predicted-Lesion-Mask-${var}.nii.gz -add T1_Mask_Intra.nii.gz -thr 2 -bin DSC_Num_${var}.nii.gz
-		mv DSC_*.nii.gz Analysis_Files/DSC
-	done
-
-	# More housekeeping
-	mv T1* DSC_Intermediates
-	mv Post2Intra.mat DSC_Intermediates
-
-	cd ..
-done
-} 
-#### 	End DSC Function		###############################################################
 
 #### 	Main Function		###############################################################
 
@@ -411,12 +420,12 @@ then
 			mkdir -p $base/Patient_Files/$1/Processed_Files/TMap$x/DSC_Intermediates	#Directory to hold the files that are created for DSC analysis, that are not directly analyzed
 		done		
 	
-		echo $file						#for tracking progress of function
+		
 		cd "$base"/Patient_Files/$1
 		Volume $1 $base
 		echo Volume Done
-		cd "$base"/Patient_Files/$1/Processed_Files
-		DSC $1
+		#cd "$base"/Patient_Files/$1/Processed_Files
+		#DSC $1
 		echo DSC Done	
 	else
 		echo Patient $1 does not exist, May not have been processed
@@ -461,12 +470,12 @@ then
 				mkdir -p $base/Patient_Files/$1/Processed_Files/TMap$x/Auxilliary_Files		#Holds any other files that were needed
 				mkdir -p $base/Patient_Files/$1/Processed_Files/TMap$x/DSC_Intermediates	#Hold the files that are created for DSC analysis, that are not directly analyzed
 			done		
-			cd "$base"/Patient_Files/$file					
+			cd "$base"/Patient_Files/$file	
+			echo $pwd				
 			Volume $file $base
 			echo Volume Done
-			cd "$base"/Patient_Files/$1/Processed_Files
-			DSC $file
-			echo DSC Done		
+			#cd "$base"/Patient_Files/$1/Processed_Files
+			#DSC $file	
 		else
 			echo Patient $1 either does not exist or has not been processed in MATLAB
 			exit 704

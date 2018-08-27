@@ -1,6 +1,16 @@
 % This is the main function that produces the magnitude, temperature, and
 % thermal dose maps
-function extractNiftiZipInput2(cmd,cmd2,zipfile,outFile,RigidTransformFile)
+
+
+%Difference between v1 and v2
+%Arguement order: Was cmd, cmd2, zip, out, rigid. Now: cmd, cmd2, zip,
+%rigid, out
+%Outfile is now optional
+%Reason: allows for the file tree structure to be easily maintained
+%Removed problem line on 144 that was throwing errors
+
+
+function extractNiftiZipInput2(cmd,cmd2,zipfile,RigidTransformFile,outFile)
 
  %First bit is for testing and using any default bits
  %Add unit testing
@@ -12,10 +22,7 @@ if nargin==0
     outFile = '/Users/spichardo/Downloads/ET 9002 Thermal Data';
     RigidTransformFile='9002-RXYZ-PreTreat-To-IntraOp.RAS';
 end
-if ~exist('outFile','var')
-     % third parameter does not exist, so default is set
-     outFile = pwd/Patient_Files;
-end
+
 %addpath([pwd,filesep,'dicm2nii']);
 addpath(fullfile(pwd,'dicm2nii'))
 
@@ -36,12 +43,17 @@ cmd2=strtrim(cmd1);
 path=RigidTransformFile(numel(RigidTransformFile)-32:numel(RigidTransformFile));
 path=path(1:4);
 
-if exist(fullfile(pwd,'Patient_Files'))==0
-    mkdir Patient_Files;
-    mkdir(fullfile(pwd,'Patient_Files',path));
-elseif exist(fullfile(pwd,'Patient_Files',path))==0
-    mkdir(fullfile(pwd,'Patient_Files',path));
+if ~exist('outFile','var')
+     % third parameter does not exist, so default is set
+     outFile = fullfile(pwd,'Patient_Files',path);
 end
+
+%if exist(fullfile(pwd,'Patient_Files'))==0
+%    mkdir Patient_Files;
+%    mkdir(fullfile(pwd,'Patient_Files',path));
+%elseif exist(fullfile(pwd,'Patient_Files',path))==0
+%    mkdir(fullfile(pwd,'Patient_Files',path));
+%end
 
 
 %If user wants temperature maps, input command: 'tempMap', If user wants
@@ -131,7 +143,7 @@ catch ME
 end
 
 path1=fullfile(pwd,'Patient_Files',path);
-movefile('Patient_Files/*.nii.gz',(path1))
+%movefile(fullfile(pwd,'Patient_Files/*.nii.gz',(path1))
 %movefile('PreOp*.nii.gz',(path1))
 rmdir(tdir,'s');
 
