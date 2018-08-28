@@ -3,8 +3,7 @@
 {
     "inputs":
         [
-            {"name":"cmd", "kind":"required", "type":"choices={'tempMap', 'magMap', 'all'}"},
-            {"name":"cmd2", "kind":"required","type":"choices={'thermalDose', 'tempMap', 'all'}"},
+            {"name":"cmd", "kind":"required", "type":"choices={'temp', 'mag', 'dose', 'temp&dose', 'temp&mag', 'mag&dose', 'all'}"},
             {"name":"zipfile", "kind":"required", "type":"filepath=*.zip"},
             {"name":"RigidTransformFile", "kind":"required", "type":"filepath=*-RXYZ-IntraOp-To-PreTreat.ras,*-RXYZ-IntraOp-To-PreTreat.RAS"},
             {"name":"outFile", "kind":"optional", "type":"folderpath"}
