@@ -101,7 +101,7 @@ extractNiftiZipInput2(cmd, zipfile, RigidTransformFile, outFile)
 	o	Extract temperature maps only. Output to default directory
 		~	extractNiftiZipInput2('temp','/Volumes/Pikelab/SPichardo/9002-May19 2017.zip','Volumes/Pikelab/SPichardo/9002-Intra-to-Pre.RAS')
 	o	Extract all maps and save to other directory. Output to desktop
-		~	extractNiftiZipInput2('all','/Volumes/Pikelab/SPichardo/9002-May192017.zip','/Volumes/Pikelab/SPicarod/9002-Intra-to-Pre.RAS','~/Desktop/9002')
+		~	extractNiftiZipInput2('all','/Volumes/Pikelab/SPichardo/9002-May19 2017.zip','/Volumes/Pikelab/SPicarod/9002-Intra-to-Pre.RAS','~/Desktop/9002')
 
 
 
