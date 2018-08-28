@@ -10,7 +10,7 @@
 %Removed problem line on 144 that was throwing errors
 
 
-function extractNiftiZipInput2(cmd,cmd2,zipfile,RigidTransformFile,outFile)
+function extractNiftiZipInput2(cmd,zipfile,RigidTransformFile,outFile)
 
  %First bit is for testing and using any default bits
  %Add unit testing
@@ -36,8 +36,8 @@ end
 cmd= lower(cmd);
 cmd= strtrim(cmd);
 
-cmd1=lower(cmd2);
-cmd2=strtrim(cmd1);
+% cmd1=lower(cmd2);
+% cmd2=strtrim(cmd1);
 
 
 path=RigidTransformFile(numel(RigidTransformFile)-32:numel(RigidTransformFile));
@@ -58,17 +58,17 @@ end
 
 %If user wants temperature maps, input command: 'tempMap', If user wants
 %magnitudes use command: 'magMap'. If user wants both use: 'all'
-if ( strcmp('tempMap',cmd) == 0 ) && (strcmp('magMap',cmd)==0) && (strcmp('all',cmd)==0)
+if ( strcmp('temp',cmd) == 0 ) && (strcmp('mag',cmd)==0) && (strcmp('dose',cmd)==0)  && (strcmp('temp&dose',cmd)==0) && (strcmp('temp&mag',cmd)==0) && (strcmp('mag&dose',cmd)==0) && (strcmp('all',cmd)==0)
     string = strcat(cmd, ' is not a valid opetion, select from the provided options: thermal, magnitude, or all');
     error(string);
 end
 
-%If user wants thermal dose maps, input command: 'thermalDose', If user wants
-%only temperature maps, use command: 'tempmap'. If user wants both use: 'all'
-if ( strcmp('thermalDose',cmd2) == 0 ) && (strcmp('tempMap',cmd2)==0) && (strcmp('all',cmd2)==0)
-    string = strcat(cmd2, ' is not a valid opetion, select from the provided options: thermal, magnitude, or all');
-    error(string);
-end
+% %If user wants thermal dose maps, input command: 'thermalDose', If user wants
+% %only temperature maps, use command: 'tempmap'. If user wants both use: 'all'
+% if ( strcmp('thermalDose',cmd2) == 0 ) && (strcmp('tempMap',cmd2)==0) && (strcmp('all',cmd2)==0)
+%     string = strcat(cmd2, ' is not a valid opetion, select from the provided options: thermal, magnitude, or all');
+%     error(string);
+% end
 
 %If the output file does not exist, then create it.
 if exist(outFile,'dir')==0
@@ -96,17 +96,17 @@ try
         Coords=xml2coords(XML,Number,i,SqueezedFiles(i).ThermalCount);
         [RawNiftiMag1,RawNiftiMag2,RawNiftiTherm1,RawNiftiTherm2]=MakeRawNifties(ProcessedFiles(i));
         
-        if strcmp(cmd,'magMap') || strcmp(cmd,'all')
+        if strcmp(cmd,'mag') || strcmp(cmd,'temp&mag') || strcmp(cmd,'mag&dose') || strcmp(cmd,'all')
             [NiftiMag1_IntraOp,NiftiMag1_PreOp]=CommonNifti(RawNiftiMag1,Coords,SqueezedFiles(i).MagnitudeCount,ProcessedFiles(i).Orientation,'magnitude',IntraOpMat);
             [NiftiMag2_IntraOp,NiftiMag2_PreOp]=CommonNifti(RawNiftiMag2,Coords,SqueezedFiles(i).MagnitudeCount,ProcessedFiles(i).Orientation,'magnitude',IntraOpMat);
         end
         
-        if strcmp(cmd,'tempMap') || strcmp(cmd,'all')
+        if strcmp(cmd,'temp') || strcmp(cmd,'temp&dose') || strcmp(cmd,'temp&mag') || strcmp(cmd,'all')
             [NiftiTherm1_IntraOp,NiftiTherm1_PreOp]=CommonNifti(RawNiftiTherm1,Coords,SqueezedFiles(i).ThermalCount,ProcessedFiles(i).Orientation,'thermal',IntraOpMat);
             [NiftiTherm2_IntraOp,NiftiTherm2_PreOp]=CommonNifti(RawNiftiTherm2,Coords,SqueezedFiles(i).ThermalCount,ProcessedFiles(i).Orientation,'thermal',IntraOpMat);
         end
         
-        if strcmp(cmd2,'thermalDose') || strcmp(cmd2,'all')
+        if strcmp(cmd,'dose') || strcmp(cmd,'temp&dose') || strcmp(cmd,'mag&dose') || strcmp(cmd,'all')
             NiftiThermDose1_IntraOp =NiftiTherm1_IntraOp;
             NiftiThermDose2_IntraOp = NiftiTherm2_IntraOp;
             NiftiThermDose1_PreOp =NiftiTherm1_PreOp;
@@ -118,17 +118,17 @@ try
             NiftiThermDose2_PreOp.img = arrayfun(@(x) calcThermalDose(x),NiftiThermDose2_PreOp.img);
         end
 
-        if strcmp(cmd,'magMap') || strcmp(cmd,'all')
+        if strcmp(cmd,'mag') || strcmp(cmd,'temp&mag') || strcmp(cmd,'mag&dose') || strcmp(cmd,'all')
             SaveNifties('IntraOp-Magnitude',i,NiftiMag1_IntraOp,NiftiMag2_IntraOp,outFile);
             SaveNifties('PreOp-Magnitude',i,NiftiMag1_PreOp,NiftiMag2_PreOp,outFile);
         end
         
-        if ( strcmp(cmd,'tempMap') || strcmp(cmd,'all') ) && ( strcmp(cmd2,'tempMap') || strcmp(cmd2,'all') )
+        if strcmp(cmd,'temp') || strcmp(cmd,'temp&dose') || strcmp(cmd,'temp&mag') || strcmp(cmd,'all')
             SaveNifties('IntraOp-Thermal',i,NiftiTherm1_IntraOp,NiftiTherm2_IntraOp,outFile);
             SaveNifties('PreOp-Thermal',i,NiftiTherm1_PreOp,NiftiTherm2_PreOp,outFile);
         end
         
-        if ( strcmp(cmd,'tempMap') || strcmp(cmd,'all') ) && ( strcmp(cmd2,'thermalDose') || strcmp(cmd2,'all') )
+        if strcmp(cmd,'dose') || strcmp(cmd,'temp&dose') || strcmp(cmd,'mag&dose') || strcmp(cmd,'all')
             SaveNifties('IntraOp-CEM240-',i,NiftiThermDose1_IntraOp,NiftiThermDose2_IntraOp,outFile);
             SaveNifties('PreOp-CEM240-',i,NiftiThermDose1_PreOp,NiftiThermDose2_PreOp,outFile);
         end
