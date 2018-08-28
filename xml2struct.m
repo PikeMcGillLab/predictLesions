@@ -1,3 +1,6 @@
+% Taken from github repository https://github.com/kndiaye/matlab
+% by Douglas Schwarz
+
 function out = xml2struct(xmlfile)
 %XML2STRUCT Read XML file into a structure.
 
