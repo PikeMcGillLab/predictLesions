@@ -95,13 +95,13 @@ extractNiftiZipInput2(cmd, zipfile, RigidTransformFile, outFile)
 		~	PreOp-CEM240-#-Sonication_#.nii.gz
 -	Examples - Use within MATLAB
 	o	Extract: temperature maps, magnitude, maps, thermal dose maps. Output to default directory
-		~	extractNiftiZipInput2('all',' /Volumes/Pikelab/SPichardo/9002-May19 2017.zip','Volumes/Pikelab/SPichardo/9002-Intra-to-Pre.RAS')
+		~	extractNiftiZipInput2('all','/Volumes/Pikelab/SPichardo/ET 9002 - June 15 2017.zip','/Volumes/Pikelab/SPichardo/9002-RXYZ-IntraOp-To-PreTreat.RAS')
 	o	Extract temperature maps and thermal dose maps. Output to desktop
-	extractNiftiZipInput2('temp&dose',' /Volumes/Pikelab/SPichardo/9002-May19 2017.zip', 'Volumes/Pikelab/SPichardo/9002-Intra-to-Pre.RAS','~/Desktop')
+	extractNiftiZipInput2('temp&dose','/Volumes/Pikelab/SPichardo/ET 9002 - June 15 2017.zip', '/Volumes/Pikelab/SPichardo/9002-RXYZ-IntraOp-To-PreTreat.RAS','~/Desktop')
 	o	Extract temperature maps only. Output to default directory
-		~	extractNiftiZipInput2('temp','/Volumes/Pikelab/SPichardo/9002-May19 2017.zip','Volumes/Pikelab/SPichardo/9002-Intra-to-Pre.RAS')
+		~	extractNiftiZipInput2('temp','/Volumes/Pikelab/SPichardo/ET 9002 - June 15 2017.zip','/Volumes/Pikelab/SPichardo/9002-RXYZ-IntraOp-To-PreTreat.RAS')
 	o	Extract all maps and save to other directory. Output to desktop
-		~	extractNiftiZipInput2('all','/Volumes/Pikelab/SPichardo/9002-May19 2017.zip','/Volumes/Pikelab/SPicarod/9002-Intra-to-Pre.RAS','~/Desktop/9002')
+		~	extractNiftiZipInput2('all','/Volumes/Pikelab/SPichardo/ET 9002 - June 15 2017.zip','/Volumes/Pikelab/SPichardo/9002-RXYZ-IntraOp-To-PreTreat.RAS','~/Desktop/9002')
 
 
 
@@ -193,34 +193,36 @@ genReport (patient 1, patient x)
 
 Available Data:
 
-Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp to PreOp Matrix | Fiesta |T1 | T1 Mask |
-	|	  |			   |			     |			       |	|   |	      |
-9001	|   x     |	     x		   |		n/a	     |		n/a	       |  n/a	| x |	 x    |
-9002	|   x     |	     x		   |		 x	     |		 x	       |   x 	| x |	 x    |
-9003	|   x     |	     x		   |		 x	     |		 x	       |   x 	| x |	 x    |
-9004	|   x     |	     x		   |		 x	     |		 x	       |   x 	| x |	 x    |
-9005	|   x     |	     x		   |		 x	     |		 x	       |   x 	| x |	 x    |
-9006	|   x     |	     x		   |		 x	     |		 x	       |   x 	| x |	 x    |
-9007	|   x     |	     x		   |		 x	     |		 x	       |   x 	| x |	 x    |
-9008	|   x     |	     x		   |		 x	     |		 x	       |   x 	| x |	 x    |
-9009	|   x     |	     x		   |		 x	     |		 x	       |   x 	| x |	 x    |
-9010	|   x     |	     x		   |		 x	     |		 x	       |   x 	| x |	 x    |
-9011	|   x     |	     x		   |		 x	     |		 x	       |   x 	| x |	 x    |
-9012	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	| x |	 x    |
-9013	|   x     |	     x		   |		 x	     |		 x	       |   x 	| x |	 x    |
-9014	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	| x |	 x    |
-9015	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	| x |	 x    |
-9016	|   x     |	    n/a		   |		 x	     |		 x	       |   x 	| x |	 x    |
-9017	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	| x |	 x    |
-9018	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	| x |	 x    |
-9019	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	| x |	 x    |
-9020	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	| x |	 x    |
-9021	|   x     |	    n/a		   |		 x	     |		 x	       |   x 	| x |	 x    |
-9022	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	| x |	 x    |
+This table shows the files that are available for the listed patients. Contact for the file is shown below the file type in parenthathese. An 'x' indicates file is available, a 'n/a' indicates file is not available.
+
+Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp to PreOp Matrix | Fiesta |   T1   | T1 Mask | Pre-Op T2 Reference Image |
+	| (Samuel)|	(Erin)		   |	   (Samuel)	     |	    (Samuel)	       | 	| (Erin) | (Erin)  |       (Samuel)  		 |
+9001	|   x     |	     x		   |		n/a	     |		n/a	       |  n/a	|   x    |    x    |        n/a                  |
+9002	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
+9003	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
+9004	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
+9005	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
+9006	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
+9007	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
+9008	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
+9009	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
+9010	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
+9011	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
+9012	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|   x    |    x    |        n/a                  |
+9013	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
+9014	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|   x    |    x    |        n/a                  |
+9015	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|   x    |    x    |        n/a                  |
+9016	|   x     |	    n/a		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
+9017	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|   x    |    x    |        n/a                  |
+9018	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|   x    |    x    |        n/a                  |
+9019	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|   x    |    x    |        n/a                  |
+9020	|  n/a    |	    n/a		   |		 x 	     |		 x	       |   x  	|   x    |    x    |        x                    |
+9021	|   x     |	    n/a		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
+9022	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|   x    |    x    |        n/a                  |
 
 
 
--	9001
+-	9001 - Can't run - Missing Pre-Op to Intra-Op Matrix, Fiesta Image, T2 Pre-Op Reference, 
 	o	Zipfile
 		~	/Volumes/Pikelab/SPichardo/ET 9001 - May 26 2017.zip
 	o	Intra-Operative to Pre-Operative Transformation Matrix
@@ -229,11 +231,11 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9001_SH-11644/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9001_SH-11644/anat/ T1_lesion_mask_filled.nii.gz
--	9002
+-	9002 - Can run
 	o	Zipfile
 		~	/Volumes/Pikelab/SPichardo/ET 9002 - June 15 2017.zip
 	o	Intra-Operative to Pre-Operative Transformation Matrix
-		~	/Volumes/Pikelab/SPichardo/9002-RXYZ-IntraOp-To-PreTreat.RAS
+		~	/Volumes/Pikelab/SPichardo/9002-RXYZ-PreTreat-To-IntraOp.RAS
 	o	Pre-Operative to Intra-Operative Transformation Matrix
 		~	/Volumes/Pikelab/SPichardo/9002-PreTreat-To-IntraOp.MAT
 	o	Post-Operative to Pre-Operative Transformation Matrix
@@ -244,11 +246,13 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9002_RA-11764/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9002_RA-11764/anat/ T1_lesion_mask_filled.nii.gz
--	9003
+	o	Pre-Op T2 Image
+		~	/Volumes/Pikelab/SPichardo/input/9002 Ra 19000101/study/Sag CUBE T2.nii.gz
+-	9003 - Can run
 	o	Zipfile
 		~	/Volumes/Pikelab/SPichardo/ET 9003 - July 25 2017.zip
 	o	Intra-Operative to Pre-Operative Transformation Matrix
-		~	/Volumes/Pikelab/SPichardo/9003-RXYZ-IntraOp-To-PreTreat.RAS
+		~	/Volumes/Pikelab/SPichardo/9003-RXYZ-PreTreat-To-IntraOp.RAS
 	o	Pre-Operative to Intra-Operative Transformation Matrix
 		~	/Volumes/Pikelab/SPichardo/9003-PreTreat-To-IntraOp.MAT
 	o	Post-Operative to Pre-Operative Transformation Matrix
@@ -259,11 +263,13 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9003_RB-12013/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9003_RB-12013/anat/T1_lesion_mask_filled.nii.gz
--	9004
+	o	Pre-Op T2 Image
+		~	/Volumes/Pikelab/SPichardo/input/9003 Rb 19000101/study/Sag CUBE T2.nii.gz
+-	9004 - Can run
 	o	Zipfile
 		~	/Volumes/Pikelab/SPichardo/ET 9004 - Aug 15 2017.zip
 	o	Intra-Operative to Pre-Operative Transformation Matrix
-		~	/Volumes/Pikelab/SPichardo/9004-RXYZ-IntraOp-To-PreTreat.RAS
+		~	/Volumes/Pikelab/SPichardo/9004-RXYZ-PreTreat-To-IntraOp.RAS
 	o	Pre-Operative to Intra-Operative Transformation Matrix
 		~	/Volumes/Pikelab/SPichardo/9004-PreTreat-To-IntraOp.MAT
 	o	Post-Operative to Pre-Operative Transformation Matrix
@@ -274,11 +280,13 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9004_EP-12126/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9004_EP-12126/anat/T1_lesion_mask_filled.nii.gz
--	9005
+	o	Pre-Op T2 Image
+		~	/Volumes/Pikelab/SPichardo/input/9004Ep 19000101/study/Sag CUBE T2.nii.gz
+-	9005 - Can run
 	o	Zipfile
 		~	/Volumes/Pikelab/SPichardo/ET_9005 - Jan 16 2018.zip
 	o	Intra-Operative to Pre-Operative Transformation Matrix
-		~	/Volumes/Pikelab/SPichardo/9005-RXYZ-IntraOp-To-PreTreat.RAS
+		~	/Volumes/Pikelab/SPichardo/9005-RXYZ-PreTreat-To-IntraOp.RAS
 	o	Pre-Operative to Intra-Operative Transformation Matrix
 		~	/Volumes/Pikelab/SPichardo/9005-PreTreat-To-IntraOp.MAT
 	o	Post-Operative to Pre-Operative Transformation Matrix
@@ -289,11 +297,13 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9005_BG-13004/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9005_BG-13004/anat/T1_lesion_mask_filled.nii.gz
--	9006
+	o	Pre-Op T2 Image
+		~	/Volumes/Pikelab/SPichardo/input/9005 Bg 19000101/study/Sag CUBE T2.nii.gz
+-	9006 - Can run
 	o	Zipfile
 		~	/Volumes/Pikelab/SPichardo/ET 9006 - Sep 26 2017.zip
 	o	Intra-Operative to Pre-Operative Transformation Matrix
-		~	/Volumes/Pikelab/SPichardo/9006-RXYZ-IntraOp-To-PreTreat.RAS
+		~	/Volumes/Pikelab/SPichardo/9006-RXYZ-PreTreat-To-IntraOp.RAS
 	o	Pre-Operative to Intra-Operative Transformation Matrix
 		~	/Volumes/Pikelab/SPichardo/9006-PreTreat-To-IntraOp.MAT
 	o	Post-Operative to Pre-Operative Transformation Matrix
@@ -303,12 +313,14 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 	o	T1
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9006_EO-12389/anat/T1.nii.gz
 	o	T1 Lesion Mask
-	~		/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9006_EO-12389/anat/T1_lesion_mask_filled.nii.gz
--	9007
+		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9006_EO-12389/anat/T1_lesion_mask_filled.nii.gz
+	o	Pre-Op T2 Image
+		~	/Volumes/Pikelab/SPichardo/input/9006 Eo 19000101/study/Sag CUBE T2.nii.gz
+-	9007 - Can run
 	o	Zipfile
 		~	/Volumes/Pikelab/SPichardo/ET 9007 - Nov 28 2017.zip
 	o	Intra-Operative to Pre-Operative Transformation Matrix
-		~	/Volumes/Pikelab/SPichardo/9007-RXYZ-IntraOp-To-PreTreat.RAS
+		~	/Volumes/Pikelab/SPichardo/9007-RXYZ-PreTreat-To-IntraOp.RAS
 	o	Pre-Operative to Intra-Operative Transformation Matrix
 		~	/Volumes/Pikelab/SPichardo/9007-PreTreat-To-IntraOp.MAT
 	o	Post-Operative to Pre-Operative Transformation Matrix
@@ -319,11 +331,13 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9007_RB-12461/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9007_RB-12461/anat/T1_lesion_mask_filled.nii.gz
--	9008
+	o	Pre-Op T2 Image
+		~	/Volumes/Pikelab/SPichardo/input/9007 Rb 19000101/study/Sag CUBE T2.nii.gz
+-	9008 - Can run
 	o	Zipfile
 		~	/Volumes/Pikelab/SPichardo/ET 9008 - Oct 24 2017.zip
 	o	Intra-Operative to Pre-Operative Transformation Matrix
-		~	/Volumes/Pikelab/SPichardo/9008-RXYZ-IntraOp-To-PreTreat.RAS
+		~	/Volumes/Pikelab/SPichardo/9008-RXYZ-PreTreat-To-IntraOp.RAS
 	o	Pre-Operative to Intra-Operative Transformation Matrix
 		~	/Volumes/Pikelab/SPichardo/9008-PreTreat-To-IntraOp.MAT
 	o	Post-Operative to Pre-Operative Transformation Matrix
@@ -334,11 +348,13 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9008_JO-12613/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9008_JO-12613/anat/T1_lesion_mask_filled.nii.gz
--	9009
+	o	Pre-Op T2 Image
+		~	/Volumes/Pikelab/SPichardo/input/9008 Jo 19440109/study/Sag CUBE T2.nii.gz
+-	9009 - Can run
 	o	Zipfile
 		~	/Volumes/Pikelab/SPichardo/ET 9009- Dec 19 2017.zip
 	o	Intra-Operative to Pre-Operative Transformation Matrix
-		~	/Volumes/Pikelab/SPichardo/9009-RXYZ-IntraOp-To-PreTreat.RAS
+		~	/Volumes/Pikelab/SPichardo/9009-RXYZ-PreTreat-To-IntraOp.RAS
 	o	Pre-Operative to Intra-Operative Transformation Matrix
 		~	/Volumes/Pikelab/SPichardo/9009-PreTreat-To-IntraOp.MAT
 	o	Post-Operative to Pre-Operative Transformation Matrix
@@ -349,11 +365,13 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9009_CRB-12609/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9009_CRB-12609/anat/T1_lesion_mask_filled.nii.gz
--	9010
+	o	Pre-Op T2 Image
+		~	/Volumes/Pikelab/SPichardo/input/9009 Crb 19331201/study/Sag CUBE T2.nii.gz
+-	9010 - Can run
 	o	Zipfile
 		~	/Volumes/Pikelab/SPichardo/ET-9010 - March 20 2018.zip
 	o	Intra-Operative to Pre-Operative Transformation Matrix
-		~	/Volumes/Pikelab/SPichardo/9010-RXYZ-IntraOp-To-PreTreat.RAS
+		~	/Volumes/Pikelab/SPichardo/9010-RXYZ-PreTreat-To-IntraOp.RAS
 	o	Pre-Operative to Intra-Operative Transformation Matrix
 		~	/Volumes/Pikelab/SPichardo/9010-PreTreat-To-IntraOp.MAT
 	o	Post-Operative to Pre-Operative Transformation Matrix
@@ -364,11 +382,13 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9010_RR-13130/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9010_RR-13130/anat/T1_lesion_mask_filled.nii.gz
--	9011
+	o	Pre-Op T2 Image
+		~	/Volumes/Pikelab/SPichardo/input/9010 Rr 19000101/study/Sag CUBE T2.nii.gz
+-	9011 - Can run
 	o	Zipfile
 		~	/Volumes/Pikelab/SPichardo/ET 9011 - June 19 2018.zip
 	o	Intra-Operative to Pre-Operative Transformation Matrix
-		~	/Volumes/Pikelab/SPichardo/9011-RXYZ-IntraOp-To-PreTreat.RAS
+		~	/Volumes/Pikelab/SPichardo/9011-RXYZ-PreTreat-To-IntraOp.RAS
 	o	Pre-Operative to Intra-Operative Transformation Matrix
 		~	/Volumes/Pikelab/SPichardo/9011-PreTreat-To-IntraOp.MAT
 	o	Post-Operative to Pre-Operative Transformation Matrix
@@ -379,16 +399,18 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9011_BB-13042/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9011_BB-13042/anat/T1_lesion_mask_filled.nii.gz
--	9012
+	o	Pre-Op T2 Image
+		~	/Volumes/Pikelab/SPichardo/input/9011 Bb 19000101/study/Sag CUBE T2.nii.gz
+-	9012 - Can't run - Missing Fiesta, T2 Pre Op ref image, all matrices
 	o	T1
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9012_AT-13418/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9012_AT-13418/anat/T1_lesion_mask_filled.nii.gz
--	9013
+-	9013 - Can run
 	o	Zipfile
 		~	/Volumes/Pikelab/SPichardo/ET 9013 - Apr 17 2018.zip
 	o	Intra-Operative to Pre-Operative Transformation Matrix
-		~	/Volumes/Pikelab/SPichardo/9013-RXYZ-IntraOp-To-PreTreat.RAS
+		~	/Volumes/Pikelab/SPichardo/9013-RXYZ-PreTreat-To-IntraOp.RAS
 	o	Pre-Operative to Intra-Operative Transformation Matrix
 		~	/Volumes/Pikelab/SPichardo/9013-PreTreat-To-IntraOp.MAT
 	o	Post-Operative to Pre-Operative Transformation Matrix
@@ -399,21 +421,23 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9013_JD-13455/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9013_JD-13455/anat/T1_lesion_mask_filled.nii.gz
--	9014
+	o	Pre-Op T2 Image
+		~	/Volumes/Pikelab/SPichardo/input/9013 Jd 19000101/study/Sag CUBE T2.nii.gz
+-	9014 - Can't run - Missing Fiesta, T2 Pre Op ref image, all matrices
 	o	T1
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9014_DM-13068/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9014_DM-13068/anat/T1_lesion_mask_filled.nii.gz
--	9015
+-	9015 - Can't run - Missing Fiesta, T2 Pre Op ref image, all matrices
 	o	T1
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9015-DW-13582/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9015-DW-13582/anat/T1_lesion_mask_filled.nii.gz
--	9016
+-	9016 - Can't run - Missing Post-Op to Pre-Op matrix
 	o	Zipfile
 		~	/Volumes/Pikelab/SPichardo/ET 9016 - Aug 2nd 2018.zip
 	o	Intra-Operative to Pre-Operative Transformation Matrix
-		~	/Volumes/Pikelab/SPichardo/9016-RXYZ-IntraOp-To-PreTreat.RAS
+		~	/Volumes/Pikelab/SPichardo/9016-RXYZ-PreTreat-To-IntraOp.RAS
 	o	Pre-Operative to Intra-Operative Transformation Matrix
 		~	/Volumes/Pikelab/SPichardo/9016-PreTreat-To-IntraOp.MAT
 	o	Fiesta
@@ -422,33 +446,41 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9016_EB-13634/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9016_EB-13634/anat/T1_lesion_mask_filled.nii.gz
--	9017
+	o	Pre-Op T2 Image
+		~	/Volumes/Pikelab/SPichardo/input/9016 Eb 19000101/study/Sag CUBE T2.nii.gz
+-	9017 - Can't run - Missing Fiesta, T2 Pre Op ref image, all matrices
 	o	T1
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9017_DB-13822/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9017_DB-13822/anat/T1_lesion_mask_filled.nii.gz
--	9018
+-	9018 - Can't run - Missing Fiesta, T2 Pre Op ref image, all matrices
 	o	T1
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9018_BK-13858/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9018_BK-13858/anat/T1_lesion_mask_filled.nii.gz
--	9019
+-	9019 - Can't run - Missing Fiesta, T2 Pre Op ref image, all matrices
 	o	T1
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9019_TB-14038/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9019_TB-14038/anat/T1_lesion_mask_filled.nii.gz
--	9020
+-	9020 - Can't run - Missing Post-Op to Pre-Op matrix
 	o	T1
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9020_JL-14121/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9020_JL-14121/anat/T1_lesion_mask_filled.nii.gz
+	o	Pre-Operative to Intra-Operative Transformation Matrix
+		~	/Volumes/Pikelab/SPichardo/9020-PreTreat-To-IntraOp.MAT	
+	o	Intra-Operative to Pre-Operative Transformation Matrix
+		~	/Volumes/Pikelab/SPichardo/9020-RXYZ-PreTreat-To-IntraOp.RAS
 	o	Fiesta
 		~	/Volumes/Pikelab/SPichardo/input/9020 Jl 19000101/study/3D FIESTA.nii.gz
--	9021
+	o	Pre-Op T2 Image
+		~	/Volumes/Pikelab/SPichardo/input/9020 Jl 19000101/study/Sag CUBE T2.nii.gz
+-	9021 - Can't run - Missing Post-Op to Pre-Op matrix
 	o	Zipfile
 		~	/Volumes/Pikelab/SPichardo/ET 9021 - Aug 2nd 2018.zip
 	o	Intra-Operative to Pre-Operative Transformation Matrix
-		~	/Volumes/Pikelab/SPichardo/9021-RXYZ-IntraOp-To-PreTreat.RAS
+		~	/Volumes/Pikelab/SPichardo/9021-RXYZ-PreTreat-To-IntraOp.RAS
 	o	Pre-Operative to Intra-Operative Transformation Matrix
 		~	/Volumes/Pikelab/SPichardo/9021-PreTreat-To-IntraOp.MAT
 	o	T1
@@ -457,7 +489,9 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9021_WM-14127/anat/T1_lesion_mask_filled.nii.gz
 	o	Fiesta
 		~	/Volumes/Pikelab/SPichardo/input/9021 Wm 19000101/study/3D FIESTA.nii.gz
--	9022
+	o	Pre-Op T2 Image
+		~	/Volumes/Pikelab/SPichardo/input/9021 Wm 19000101/study/Sag CUBE T2.nii.gz
+-	9022 - Can't run - Missing Fiesta, T2 Pre Op ref image, all matrices
 	o	T1
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9022_JG-14290/anat/T1.nii.gz
 	o	T1 Lesion Mask
