@@ -109,13 +109,33 @@ try
         if strcmp(cmd,'dose') || strcmp(cmd,'temp&dose') || strcmp(cmd,'mag&dose') || strcmp(cmd,'all')
             NiftiThermDose1_IntraOp =NiftiTherm1_IntraOp;
             NiftiThermDose2_IntraOp = NiftiTherm2_IntraOp;
-            NiftiThermDose1_PreOp =NiftiTherm1_PreOp;
+            NiftiThermDose1_PreOp = NiftiTherm1_PreOp;
             NiftiThermDose2_PreOp = NiftiTherm2_PreOp;
             
             NiftiThermDose1_IntraOp.img = arrayfun(@(x) calcThermalDose(x),NiftiThermDose1_IntraOp.img);
+            NiftiThermDose1_IntraOp.img = sum(NiftiThermDose1_IntraOp.img,4);
+            NiftiThermDose1_IntraOp.hdr.dim(5)=1;
+%             indices = find(abs(NiftiThermDose1_IntraOp.img)>=240);
+%             NiftiThermDose1_IntraOp.img(indices) = 240;
+            
+
             NiftiThermDose2_IntraOp.img = arrayfun(@(x) calcThermalDose(x),NiftiThermDose2_IntraOp.img);
+            NiftiThermDose2_IntraOp.img = sum(NiftiThermDose2_IntraOp.img,4);
+            NiftiThermDose2_IntraOp.hdr.dim(5)=1;
+%             indices = find(abs(NiftiThermDose2_IntraOp.img)>=240);
+%             NiftiThermDose2_IntraOp.img(indices) = 240;
+            
             NiftiThermDose1_PreOp.img = arrayfun(@(x) calcThermalDose(x),NiftiThermDose1_PreOp.img);
+            NiftiThermDose1_PreOp.img = sum(NiftiThermDose1_PreOp.img,4);
+            NiftiThermDose1_PreOp.hdr.dim(5)=1;
+%             indices = find(abs(NiftiThermDose1_PreOp.img)>=240);
+%             NiftiThermDose1_PreOp.img(indices) = 240;
+            
             NiftiThermDose2_PreOp.img = arrayfun(@(x) calcThermalDose(x),NiftiThermDose2_PreOp.img);
+            NiftiThermDose2_PreOp.img = sum(NiftiThermDose2_PreOp.img,4);
+            NiftiThermDose2_PreOp.hdr.dim(5)=1;
+%             indices = find(abs(NiftiThermDose2_PreOp.img)>=240);
+%             NiftiThermDose2_PreOp.img(indices) = 240;
         end
 
         if strcmp(cmd,'mag') || strcmp(cmd,'temp&mag') || strcmp(cmd,'mag&dose') || strcmp(cmd,'all')
@@ -251,6 +271,9 @@ end %PIF
 
 % This function gets the XML data
 function [chars,xml] = ReadXML(File)
+
+%xml2struct was programmed by Douglas M. Schwarz
+%it is taken from part of the github repository: https://github.com/kndiaye/matlab
 
 chars=xml2struct([File, filesep, 'SonicationSummary.xml']);
 xml=xml2struct([File, filesep,'MriImageParams.xml']);
@@ -598,14 +621,10 @@ elseif Initial <= 43
     Final = TimeDose * 0.25^(43-Initial);
 end
 
-if Final < 0
-    Final = 0;
-elseif Final >= 240
-    Final = 240;
+
 end
 
 
-end
 
 % This function saves the images, as needed.
 function SaveNifties(infix,Sonication,NiftiImage1,NiftiImage2,outFile)
