@@ -5,10 +5,10 @@ Before you begin, make sure:
 	o	This can be accessed by requesting permission from Andre Robichaud: andre.robichaud@ucalgary.ca
 	o	See lab wiki:
 		~	https://sites.google.com/site/qmrilab/tutorials/new-lab-members
-	o	Used to access the needed files. You do not need to copy to directory. The available files are listed further in this document under the Available Files section
+	o	Used to access the needed files. These files do not need to be copied to working directory, they are accessed either when calling a function or while the function is running. The available files are listed further in this document under the Available Files section
 		~	Refer to available files section to see what files exist and where they are stored
 		~	Patient zip files
-		~	Post-Operative to Pre-Operative Transformation matrices ~
+		~	Post-Operative to T2 Pre-Operative Transformation matrices ~
 		~	Pre-Operative to Intra-Operative Transformation matrices
 		~	Intra-Operative to Pre-Operagive Transformation matrices
 		~	Fiesta Images
@@ -22,7 +22,7 @@ Before you begin, make sure:
 -	You have FSL installed
 	o	FSL 5.0.11 or 5.0.10
 	o	FLIRT v6.0
--	Assumes that all scripts/functions are in same folder. 
+-	In order to produce the predicted lesion masks and generate a final report, the files are assumed to follow the file tree.
 
 
 
