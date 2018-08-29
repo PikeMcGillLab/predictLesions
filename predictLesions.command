@@ -13,7 +13,7 @@
 
 getFiles(){
 
-# Start 	V2
+
 
 
 
@@ -35,6 +35,8 @@ do
 		cp ${path}/9005\ Bg\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
 	elif [[ $1 -eq 9006 ]];then
 		cp ${path}/9006\ Eo\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
+	elif [[ $1 -eq 9007 ]];then
+		cp ${path}/9007\ Rb\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
 	elif [[ $1 -eq 9008 ]];then
 		cp ${path}/9008\ Jo\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
 	elif [[ $1 -eq 9009 ]];then
@@ -62,8 +64,6 @@ do
 
 	# Remove the white spaces from the name
 	mv $2/Patient_Files/$1/Processed_Files/TMap${i}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}/Sagittal_Fiesta.nii.gz
-
-	# End 	V2
 
 	# Copy the T1, T1 lesion mask (post op), post-op to pre-op matrix, and pre-op to intra-op conversion matrix.
 	# T1 and masks are accessed in a if/else block because the identifier for each patient has a unique number.
@@ -184,35 +184,33 @@ then
 fi 
 
 
-#cp -R Sagittal_Fiesta.nii.gz Processed_Files/TMap1 #Not needed in V2
-#cp -R Sagittal_Fiesta.nii.gz Processed_Files/TMap2 #Not needed in V2
-
-
 # Overlay the highest value voxels throughout time axis into 3D space
 # For both intra opererative and pre-operative space
 
 
 
-if [[ -e IntraOp-CEM240-1-Sonication_1.nii.gz ]] #Must check if the dose maps are available. If not available, an error will be thrown
+if [[ -e IntraOp-CEM240-1-Sonication_1.nii.gz ]] # Must check if the dose maps are available. If not available, an error will be thrown
 then
-	for filename in IntraOp-CEM240-*-Sonication*.nii.gz #Intra-Operative thermal dose maps
-	do
-    		fname=`$FSLDIR/bin/remove_ext ${filename}` 	#FSL function used to remove the extension from the file 
-	
-		if [[ -f ${fname}_Overlay ]] 
-		then
-			rm ${fname}_Overlay
-		fi
-    	
-		fslmaths ${fname} -Tmax ${fname}_Overlay		#Using Tmax flag gets all possible lesion voxels, also increases noise
-	done
+	#for filename in IntraOp-CEM240-*-Sonication*.nii.gz #Intra-Operative thermal dose maps
+	#do
+    	#	fname=`$FSLDIR/bin/remove_ext ${filename}` 	#FSL function used to remove the extension from the file 
+	#
+	#	if [[ -f ${fname}_Overlay ]] 
+	#	then
+	#		rm ${fname}_Overlay
+	#	fi
+    	#
+	#	fslmaths ${fname} -Tmax ${fname}_Overlay		#Using Tmax flag gets all possible lesion voxels, also increases noise
+	#done
 
 	# Move images in batches 
 
-	mv -f IntraOp-CEM240-1-Sonication_*_Overlay.nii.gz Processed_Files/TMap1        
-	mv -f IntraOp-CEM240-2-Sonication_*_Overlay.nii.gz Processed_Files/TMap2
-	cp -R IntraOp-CEM240-1-Sonication_*.nii.gz Processed_Files/TMap1/IntraOp_Dose_Maps
-	cp -R IntraOp-CEM240-2-Sonication_*.nii.gz Processed_Files/TMap2/IntraOp_Dose_Maps
+	#mv -f IntraOp-CEM240-1-Sonication_*_Overlay.nii.gz Processed_Files/TMap1        
+	#mv -f IntraOp-CEM240-2-Sonication_*_Overlay.nii.gz Processed_Files/TMap2
+
+	
+	cp -R IntraOp-CEM240-1-Sonication_*.nii.gz Processed_Files/TMap1
+	cp -R IntraOp-CEM240-2-Sonication_*.nii.gz Processed_Files/TMap2
 	cp -R PreOp-CEM240-1-Sonication_*.nii.gz Processed_Files/TMap1/PreOp_Dose_Maps
 	cp -R PreOp-CEM240-2-Sonication_*.nii.gz Processed_Files/TMap2/PreOp_Dose_Maps
 
@@ -233,14 +231,14 @@ then
 			# Going to take a point mask of the final sonication based on a square spot
 			# Square to try and compensate for moving of target by surgeon
 
-			Count=$(ls IntraOp-CEM240-*-Sonication_*_Overlay.nii.gz | grep -v '/$' | wc -l)	
-			#echo $Count
+			Count=$(ls IntraOp-CEM240-*-Sonication_*.nii.gz | grep -v '/$' | wc -l)	
+			echo $Count
 		
-			for filename in IntraOp-CEM240-$i-Sonication_*_Overlay.nii.gz
+			for filename in IntraOp-CEM240-$i-Sonication_*.nii.gz
 			do  
     				fname=`$FSLDIR/bin/remove_ext ${filename}`    
     		    	
-				if [[ $filename = *12* ]];
+				if [[ $filename = *10* ]];
 		    		then
 					# Get pixels in x-dimension for spot mask
 					# Contains correction for a sagittal view, by checking if the x dimension is 1 pixel wide
@@ -329,13 +327,9 @@ then
 				#This is where the DSC merging could happen
 
 
-				##### Start V2	#########
-
 				fslmaths Predicted-Lesion-Mask-${var}.nii.gz -add T1_Mask_Intra.nii.gz -bin DSC_Denom_${var}.nii.gz
 				fslmaths Predicted-Lesion-Mask-${var}.nii.gz -add T1_Mask_Intra.nii.gz -thr 2 -bin DSC_Num_${var}.nii.gz
 				mv DSC_*.nii.gz Analysis_Files/DSC
-
-				####### end V2	#########
 
 
 			done #Threshold loop
@@ -345,23 +339,19 @@ then
 				fslmaths Predicted-Lesion-Mask.nii.gz -thr $var -bin Predicted-Lesion-Mask-${var}.nii.gz
 				#This is where the DSC merging could happen
 
-				##### Start V2	#########
-
 				fslmaths Predicted-Lesion-Mask-${var}.nii.gz -add T1_Mask_Intra.nii.gz -bin DSC_Denom_${var}.nii.gz
 				fslmaths Predicted-Lesion-Mask-${var}.nii.gz -add T1_Mask_Intra.nii.gz -thr 2 -bin DSC_Num_${var}.nii.gz
 				mv DSC_*.nii.gz Analysis_Files/DSC
 
-				####### end V2	#########
 
 			done #Threshold loop 
 
-			#### Start V2 ##########
+	
 				
 				# More housekeeping
 				mv T1* DSC_Intermediates
 				mv Post2Intra.mat DSC_Intermediates
-				
-			###### end V2 ##########
+	
 		
 			mv -f Predicted-Lesion-Mask* Analysis_Files #housekeeping
        		 	cd .. #Go up one directory and start over for TMap 2
