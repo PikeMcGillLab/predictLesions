@@ -5,8 +5,9 @@ Before you begin, make sure:
 	o	This can be accessed by requesting permission from Andre Robichaud: andre.robichaud@ucalgary.ca
 	o	See lab wiki:
 		~	https://sites.google.com/site/qmrilab/tutorials/new-lab-members
-	o	Used to access the needed files. These files do not need to be copied to working directory, they are accessed either when calling a function or while the function is running. The available files are listed further in this document under the Available Files section
-		~	Refer to available files section to see what files exist and where they are stored
+	o	Used to access the files needed to process patients. These files do not need to be copied to your computer. They are accessed either when calling a function or within the function, while it is running. 
+	o	Refer to available files section to see what files exist and where they are stored
+	o	Files that are needed to process patients, any files with blank spaces that will be used with FSL are renamed 			while the function is being called.
 		~	Patient zip files
 		~	Post-Operative to T2 Pre-Operative Transformation matrices ~
 		~	Pre-Operative to Intra-Operative Transformation matrices
@@ -16,9 +17,6 @@ Before you begin, make sure:
 		~	T1 lesion masks
 -	You are using a Mac (tested on OS 10.12.6 and OS 10.13.6)
 -	You have installed MATLAB (tested on 2018a and 2017b)
--	Have xml2struct tool for MATLAB
-	o	https://github.com/kndiaye/matlab/blob/master/xml2struct.m
-	o	Use to get xml2struct command
 -	You have FSL installed
 	o	FSL 5.0.11 or 5.0.10
 	o	FLIRT v6.0
@@ -40,31 +38,22 @@ Functions:
 	o	Takes the predicted lesion masks and DSC files and turns into .csv report
 
 
-
-
 How to process patients, including report generation
-1)	Open up MATLAB, change working directory to directory with matlab function
-2)	Run extractNiftiZipInput2 for desired patient - See instructions below
-3)	Open up a terminal
-4)	Go the directory containing the functions
-5)	Run predictLesions.command for desired patients - See instructions below
-6)	Run genReport.command for desired patients - See instructions below
+1)	Download git repository onto computer. Downloads as predictLesions-master.zip
+2) 	Unzip predictLesions-master and move folder to desktop
+3)	Open up MATLAB, change working directory to ~/Desktop/predictLesions-master
+4)	Run extractNiftiZipInput2 for desired patient - See instructions below
+5)	Open up a terminal
+6)	Change directory to ~/Desktop/predictLeisons-master
+7)	Run predictLesions.command for desired patients - See instructions below
+8)	Run genReport.command for desired patients, if desired - See instructions below
 
 
 
- 
-
-extractNiftiZipInput2(cmd, zipfile, RigidTransformFile, outFile)
+extractNiftiZipInput2(cmd, zipfile, RigidTransformFile)
 
 -	Purpose
 	o	Produces the magnitude, temperature, and thermal dose maps for a patient
--	Requires
-	o	Access to Pikelab
-	o	MATLAB 2018a or 2018b
--	To use
-	o	Open matlab
-	o	Set working directory to folder with extractNiftiZipInput2.m file
-	o	Use function extractNiftiZipInput2 <cmd> <filepath> <filepath> <filepath to output directory>, see examples section
 -	Input - Input is set-up to autocomplete using the included functionSignatures.json file	
 	o	Cmd - Tells MATLAB if you want temperature maps, magnitude maps, or both
 		~ 	Use the following keywords to define what nifti files you want output
@@ -80,28 +69,40 @@ extractNiftiZipInput2(cmd, zipfile, RigidTransformFile, outFile)
 	o	RigidTransformFile - The matrix that converts files from intra-operative space to pre-operative space
 		~	Input as a filepath leading to zip file *Refer to Available Data section, for filepath*
 		~ 	Requires Pikelab
-	o	outfile - The destination file where patient nifti files are to be saved
-		~	Input as a filepath to desired output directory
-		~	Default is within the directory with functions, files need to be in default if a report is needed
 -	Outputs
-	o	Magnitude Maps - Default Names:
-		~	IntraOp-Magnitude#-Sonication_#.nii.gz
-		~	PreOp-Magnitude#-Sonication_#.nii.gz
-	o	Temperature Maps - Default Names:
-		~	IntraOp-Thermal#-Sonication_#.nii.gz
-		~	PreOp-Thermal#-Sonication_#.nii.gz
-	o	Thermal Dose Maps - Default Names:
-		~	IntraOp-CEM240-#-Sonication_#.nii.gz
-		~	PreOp-CEM240-#-Sonication_#.nii.gz
+	o	Magnitude Maps
+		~	Low resolution structural image of patient's brain
+		~	This image is a 4D representation of slices of the patient's brain
+		~	Default Names:
+			>	IntraOp-Magnitude#-Sonication_#.nii.gz
+			>	PreOp-Magnitude#-Sonication_#.nii.gz
+	o	Temperature Maps
+		~	Image of the temperatures within the patients brain
+		~	This image is a 4D representation of slices of the temperature of the patient's brain
+		~	Default Names:
+			>	IntraOp-Thermal#-Sonication_#.nii.gz
+			>	PreOp-Thermal#-Sonication_#.nii.gz
+	o	Thermal Dose Maps
+		~	Image of the thermal dose of the patients brain.
+		~	Thermal dose is measured in cumulative equivalent minutes at 43 celcius (CEM43)
+		~	See /Volumes/Pikelab/MTaylor/MRgFUS_Report.pdf for more information on CEM43
+		~ 	Default Names:
+			>	IntraOp-CEM240-#-Sonication_#.nii.gz
+			>	PreOp-CEM240-#-Sonication_#.nii.gz
 -	Examples - Use within MATLAB
-	o	Extract: temperature maps, magnitude, maps, thermal dose maps. Output to default directory
-		~	extractNiftiZipInput2('all','/Volumes/Pikelab/SPichardo/ET 9002 - June 15 2017.zip','/Volumes/Pikelab/SPichardo/9002-RXYZ-IntraOp-To-PreTreat.RAS')
-	o	Extract temperature maps and thermal dose maps. Output to desktop
-	extractNiftiZipInput2('temp&dose','/Volumes/Pikelab/SPichardo/ET 9002 - June 15 2017.zip', '/Volumes/Pikelab/SPichardo/9002-RXYZ-IntraOp-To-PreTreat.RAS','~/Desktop')
-	o	Extract temperature maps only. Output to default directory
-		~	extractNiftiZipInput2('temp','/Volumes/Pikelab/SPichardo/ET 9002 - June 15 2017.zip','/Volumes/Pikelab/SPichardo/9002-RXYZ-IntraOp-To-PreTreat.RAS')
-	o	Extract all maps and save to other directory. Output to desktop
-		~	extractNiftiZipInput2('all','/Volumes/Pikelab/SPichardo/ET 9002 - June 15 2017.zip','/Volumes/Pikelab/SPichardo/9002-RXYZ-IntraOp-To-PreTreat.RAS','~/Desktop/9002')
+	o	Extract: temperature maps, magnitude, maps, thermal dose maps
+		~	extractNiftiZipInput2('all','/Volumes/Pikelab/SPichardo/ET 9002 - June 15 2017.zip','/Volumes/Pikelab/SPichardo/9002-RXYZ-PreTreat-To-IntraOp.RAS')
+	o	Extract temperature maps and thermal dose maps
+	extractNiftiZipInput2('temp&dose','/Volumes/Pikelab/SPichardo/ET 9002 - June 15 2017.zip', '/Volumes/Pikelab/SPichardo/9002-RXYZ-PreTreat-To-IntraOp.RAS')
+	o	Extract temperature maps only
+		~	extractNiftiZipInput2('temp','/Volumes/Pikelab/SPichardo/ET 9002 - June 15 2017.zip','/Volumes/Pikelab/SPichardo/9002-RXYZ-PreTreat-To-IntraOp.RAS')
+	o	Extract all maps
+		~	extractNiftiZipInput2('all','/Volumes/Pikelab/SPichardo/ET 9002 - June 15 2017.zip','/Volumes/Pikelab/SPichardo/9002-RXYZ-PreTreat-To-IntraOp.RAS')
+		
+Notes:
+The following functions, used in extractNiftiZipInput2, were not programmed by a member of McGill lab
+- xml2struct.m is sourced from https://github.com/kndiaye/matlab
+- nii_tool is sourced from https://github.com/xiangruili/dicm2nii
 
 
 
@@ -109,37 +110,37 @@ extractNiftiZipInput2(cmd, zipfile, RigidTransformFile, outFile)
 
 predictLesions (patient 1, patient x)
 -	Purpose:
-	o	Produced the predicted lesion maps using the thermal dose maps. Operates with two cases.
-		~	Case 1: Single patient. Input patient number
-		~	Case 2: Range of patients.  * Will process patients from lowest number to highest, incrementally
-	o	Produces the Dice coefficient denominator and numerator niftis for genReport.
+	o	Produces the predicted lesion masks using the thermal dose maps. 
+	o	Produces the Dice coefficient files for analysis
+	o	Operates under two cases.
+		~	Case 1: Process single patient.
+			> 	Input single patient number
+		~	Case 2: Process range of patients.  * Will process patients from lowest number to highest, 				incrementally *
+			>	Input two patient numbers, with a space between them
 -	Requires
 	o	The thermal dose map outputs from MATLAB
-	o	FSL 5.0.11 or 5.0.10
-	o	FLIRT v6.0
--	To Use:
-	o	Open up a terminal
-	o	Change directory to directory with predectLesions.command
-	o	Type into terminal ./predictLesions.command <patient 1> <patient x>
 -	Input
 	o	Patient 1 - Lowest number patient or only patient wanting processing
 		~	Function will throw an error if not provided
 	o	Patient x (optional) - Highest number patient
 -	Outputs
 	o	Predicted lesion masks
+		~	Predicted-Lesion-Mask.nii.gz
+	o	Thresholded predicted lesion masks
 		~	Predicted-Lesion-Mask-###.nii.gz
-	o	DSC numerator and denominator files
-		~	DSC_Denom_###.nii.gz
+			>	### is the thermal dose threshold
+	o	DSC numerator files
 		~	DSC_Num_###.nii.gz
-	o	### is the thermal dose threshold
+			>	### is the thermal dose threshold
+	o	DSC denominator files
+		~	DSC_Denom_###.nii.gz
+			>	### is the thermal dose threshold
 -	Examples
-	o	makeLesions user$ ./Volume3.command 9002
-		~	Will process patient 9002 only
-	o	makeLesions user$ ./Volume3.command 9004 9006
-		~	Will process patients 9004, 9005, and 9006
+	o	Process patient 9002
+		~	./predictLesions.command 9002
+	o	Will process patients 9004, 9005, and 9006
+		~	./predictLesions.command 9004 9006
 -	Possible Thrown Errors:
-	o	Too many inputs
-	o	No input
 	o	The thermal dose maps are not available
 
 
@@ -157,22 +158,16 @@ predictLesions (patient 1, patient x)
 genReport (patient 1, patient x)
 
 -	Purpose:
-	o	Generates a report for volume and dice co-efficients for the patients required works for three cases:
+	o	Generates a report for volume and dice co-efficients for the patients
+	o	Operates under three cases:
 		~	Case 1: Generate a report from patients 9002 to 9021. Enter no arguments
 		~	Case 2: Generate a report for a single patient. Enter single argument
 		~	Case 3: Generate a report for a specific range of patients. Enter argument 1 then argument 2
--	Requires:
-	o	FSL 5.0.11
-	o	That the file tree structure is followed
--	Directions to use
-	o	Open up a terminal
-	o	Change directory to directory with genReport.command
-	o	Type into terminal ./genReport.command <patient 1> <patient x>
 -	Input
 	o	Patient 1 - Optional - First or only patient that is needed
 	o	Patient x - Optional - Final patient wanted processing
 -	Output
-	o	TotalReport.csv in analysis directory
+	o	Volume-and-DSC-report.csv in Results directory
 -	Examples
 	o	Case 1
 		~	makeLesions user$./genReport.command
@@ -193,7 +188,10 @@ genReport (patient 1, patient x)
 
 Available Data:
 
-This table shows the files that are available for the listed patients. Contact for the file is shown below the file type in parenthathese. An 'x' indicates file is available, a 'n/a' indicates file is not available.
+This table shows the files that are available for the listed patients. The contact person for the file is shown below the file type in parenthathese. An 'x' indicates file is available, a 'n/a' indicates file is not available.
+
+Erin - emazerol@ucalgary.ca 
+Samuel - samuel.pichardo@ucalgary.ca
 
 Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp to PreOp Matrix | Fiesta |   T1   | T1 Mask | Pre-Op T2 Reference Image |
 	| (Samuel)|	(Erin)		   |	   (Samuel)	     |	    (Samuel)	       | 	| (Erin) | (Erin)  |       (Samuel)  		 |
@@ -496,6 +494,11 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9022_JG-14290/anat/T1.nii.gz
 	o	T1 Lesion Mask
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9022_JG-14290/anat/T1_lesion_mask_filled.nii.gz
+
+
+
+
+
 
 
 
