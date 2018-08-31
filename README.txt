@@ -85,7 +85,8 @@ extractNiftiZipInput2(cmd, zipfile, RigidTransformFile)
 	o	Thermal Dose Maps
 		~	Image of the thermal dose of the patient's brain.
 		~	Thermal dose is measured in cumulative equivalent minutes at 43 celcius (CEM43)
-		~	See /Volumes/Pikelab/MTaylor/MRgFUS_Report.pdf for more information on CEM43
+		~	See /Volumes/Pikelab/MTaylor/MRgFUS_Report.pdf and /Volumes/Pikelab/MTaylor/MRgFUS_presentation for more information on CEM43
+		~	A good paper for CEM43 is: Basic principles of thermal dosimetry and thermal thresholds for tissue damage from hyperthermia, by Dewhirst. See DOI: doi: 10.1080/0265673031000119006 or pubmed ID: 12745972
 		~ 	Default Names:
 			> 	TODO NOTE: THESE NAMES SHOULD BE CHANGED TO IntraOp-CEM43-TMap#-Sonication#.nii.gz, PreOp-CEM43-TMap#-Sonication#.nii.gz  
 			>	IntraOp-CEM240-#-Sonication_#.nii.gz
