@@ -65,7 +65,7 @@ do
 	elif [[ $1 -eq 9009 ]];then
 		cp ${path}/9009\ Crb\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
 		cp ${T1_data}/9009_CRB-13043/anat/$T1 $2/Patient_Files/$1/Processed_Files/TMap${i}
-		cp $T1_data9009_CRB-13043/anat/$mask $2/Patient_Files/$1/Processed_Files/TMap${i}
+		cp ${T1_data}/9009_CRB-13043/anat/$mask $2/Patient_Files/$1/Processed_Files/TMap${i}
 		cp ${Sam}/$1/T1_day1_2_T2_pre.mat $2/Patient_Files/$1/Processed_Files/TMap${i}
 	elif [[ $1 -eq 9010 ]];then
 		cp ${path}/9010\ Rr\ 19000101/${end}/3D\ FIESTA.nii.gz $2/Patient_Files/$1/Processed_Files/TMap${i}
@@ -132,7 +132,7 @@ getFiles $1 $2		#Copy the reference images into the Processed_Files
 
 
 
-# TODO: When function is fully working, change cp to mv
+
 if [[ -f IntraOp-Magnitude1-Sonication_1.nii.gz ]] # If mag maps are available move them
 then
 	mv *Magnitude*.nii.gz Raw_Data/Magnitude_Maps
@@ -154,10 +154,10 @@ then
 	mv PreOp-CEM240-2-Sonication_*.nii.gz Processed_Files/TMap2/PreOp_CEM43_Dose Maps
 
 # Case 2: The dose files are held in the patient root file
-elif [[ -e ./Processed_Files/TMap1/IntraOp_CEM43_Dose Maps/IntraOp-CEM240-1-Sonication_1.nii.gz ]]
+elif [[ -e ./Processed_Files/TMap1/IntraOp_CEM43_Dose_Maps/IntraOp-CEM240-1-Sonication_1.nii.gz ]]
 then
-	mv ./Processed_Files/TMap1/IntraOp_CEM43_Dose Maps/IntraOp-CEM240-1-Sonication_*.nii.gz ./Processed_Files/TMap1/
-	mv ./Processed_Files/TMap2/IntraOp_CEM43_Dose Maps/IntraOp-CEM240-2-Sonication_*.nii.gz ./Processed_Files/TMap2/
+	mv ./Processed_Files/TMap1/IntraOp_CEM43_Dose_Maps/IntraOp-CEM240-1-Sonication_*.nii.gz ./Processed_Files/TMap1/
+	mv ./Processed_Files/TMap2/IntraOp_CEM43_Dose_Maps/IntraOp-CEM240-2-Sonication_*.nii.gz ./Processed_Files/TMap2/
 
 # Case 3: Neither exists
 else
@@ -232,7 +232,7 @@ do
 			    	fi #end if block for spot mask
 
 			    	flirt -in ${fname} -ref Sagittal_FIesta.nii.gz -2D -applyxfm -usesqform -setbackground 0 -paddingsize 1 -interp nearestneighbour -out Flirt-${fname}.nii.gz  #Transform 2D overlays into Fiesta space
-				mv $filename IntraOp_CEM43_Dose Maps
+				mv $filename IntraOp_CEM43_Dose_Maps
 		    
 			done #Flirt-Space loop
 		
@@ -331,7 +331,7 @@ mkdir -p $base/Patient_Files/$1/Raw_Data/Temperature_Maps			#Directory to hold t
 for x in {1..2}
 do
 	mkdir -p $base/Patient_Files/$1/Processed_Files/TMap$x/PreOp_CEM43_Dose Maps	#Directory to hold the PreOp thermal dose maps
-	mkdir -p $base/Patient_Files/$1/Processed_Files/TMap$x/IntraOp_CEM43_Dose Maps	#Directory to hold the IntraOp thermal dose maps
+	mkdir -p $base/Patient_Files/$1/Processed_Files/TMap$x/IntraOp_CEM43_Dose_Maps	#Directory to hold the IntraOp thermal dose maps
 	mkdir -p $base/Patient_Files/$1/Processed_Files/TMap$x/Fiesta_Space		#Directory to hold the files from FLIRTing the 2D thermal dose slices
 	mkdir -p $base/Patient_Files/$1/Processed_Files/TMap$x/Analysis_Files/DSC	#Directory to hold the files that will be used for analysis, volume and DSC
 	mkdir -p $base/Patient_Files/$1/Processed_Files/TMap$x/Auxilliary_Files		#Directory to hold any other files that were needed
