@@ -45,18 +45,20 @@ How to process patients, including report generation
 4)	Run extractNiftiZipInput2 for desired patient - See instructions below
 5)	Open up a terminal
 6)	Change directory to ~/Desktop/predictLeisons-master
-7)	Run predictLesions.command for desired patients - See instructions below
-8)	Run genReport.command for desired patients, if desired - See instructions below
+8)	Use command chmod -rwx predictLesions.command to allow read, write, and execute permission
+9)	Use command chmod -rwx genReport.command to allow read, write, and execute permission
+10)	Run predictLesions.command for desired patients - See instructions below
+11)	Run genReport.command for desired patients, if desired - See instructions below
 
 
 
 extractNiftiZipInput2(cmd, zipfile, RigidTransformFile)
 
 -	Purpose
-	o	Produces the magnitude, temperature, and thermal dose maps for a patient
--	Input - Input is set-up to autocomplete using the included functionSignatures.json file	
-	o	Cmd - Tells MATLAB if you want temperature maps, magnitude maps, or both
-		~ 	Use the following keywords to define what nifti files you want output
+	o	Produces the magnitude, temperature, and thermal dose maps for a patient. The output is saved to the directory holding extractNiftiZipInput2.m
+-	Input - Set to auto-complete within MATLAB via the file: functionSignatures.json
+	o	Cmd - Sets the output for MATLAB.
+		~ 	Use the following keywords to output required nifti files
 			•	'dose' - Outputs only thermal dose maps
 			•	'temp' - Outputs only temperature maps
 			•	'mag' - Outputs only magnitude maps
@@ -71,13 +73,13 @@ extractNiftiZipInput2(cmd, zipfile, RigidTransformFile)
 		~ 	Requires Pikelab
 -	Outputs
 	o	Magnitude Maps
-		~	Low resolution structural image of patient's brain
+		~	Low resolution image showing the structures of the patient's brain
 		~	This image is a 4D representation of slices of the patient's brain
 		~	Default Names:
 			>	IntraOp-Magnitude#-Sonication_#.nii.gz
 			>	PreOp-Magnitude#-Sonication_#.nii.gz
 	o	Temperature Maps
-		~	Image of the temperatures within the patients brain
+		~	Image showing the temperatures within the patients brain
 		~	This image is a 4D representation of slices of the temperature of the patient's brain
 		~	Default Names:
 			>	IntraOp-Thermal#-Sonication_#.nii.gz
@@ -89,11 +91,11 @@ extractNiftiZipInput2(cmd, zipfile, RigidTransformFile)
 		~ 	Default Names:
 			>	IntraOp-CEM240-#-Sonication_#.nii.gz
 			>	PreOp-CEM240-#-Sonication_#.nii.gz
--	Examples - Use within MATLAB
+-	Examples - Use within MATLAB. 
 	o	Extract: temperature maps, magnitude, maps, thermal dose maps
 		~	extractNiftiZipInput2('all','/Volumes/Pikelab/SPichardo/ET 9002 - June 15 2017.zip','/Volumes/Pikelab/SPichardo/9002-RXYZ-PreTreat-To-IntraOp.RAS')
 	o	Extract temperature maps and thermal dose maps
-	extractNiftiZipInput2('temp&dose','/Volumes/Pikelab/SPichardo/ET 9002 - June 15 2017.zip', '/Volumes/Pikelab/SPichardo/9002-RXYZ-PreTreat-To-IntraOp.RAS')
+		~	extractNiftiZipInput2('temp&dose','/Volumes/Pikelab/SPichardo/ET 9002 - June 15 2017.zip', '/Volumes/Pikelab/SPichardo/9002-RXYZ-PreTreat-To-IntraOp.RAS')
 	o	Extract temperature maps only
 		~	extractNiftiZipInput2('temp','/Volumes/Pikelab/SPichardo/ET 9002 - June 15 2017.zip','/Volumes/Pikelab/SPichardo/9002-RXYZ-PreTreat-To-IntraOp.RAS')
 	o	Extract all maps
@@ -108,40 +110,46 @@ The following functions, used in extractNiftiZipInput2, were not programmed by a
 
 
 
-predictLesions (patient 1, patient x)
+predictLesions (patient x, patient y)
 -	Purpose:
 	o	Produces the predicted lesion masks using the thermal dose maps. 
-	o	Produces the Dice coefficient files for analysis
+	o	Produces the Dice Sorenson Coefficient (DSC) files for analysis
+		~	For more information on DSC refer to /Volumes/Pikelab/MTaylor/MRgFUS_Report.pdf or wikipedia
 	o	Operates under two cases.
 		~	Case 1: Process single patient.
 			> 	Input single patient number
 		~	Case 2: Process range of patients.  * Will process patients from lowest number to highest, 				incrementally *
-			>	Input two patient numbers, with a space between them
+			>	Input two patient numbers, with a space between them, see example below
+			
 -	Requires
 	o	The thermal dose map outputs from MATLAB
+		~	Will throw error if not available
 -	Input
 	o	Patient 1 - Lowest number patient or only patient wanting processing
 		~	Function will throw an error if not provided
 	o	Patient x (optional) - Highest number patient
 -	Outputs
 	o	Predicted lesion masks
-		~	Predicted-Lesion-Mask.nii.gz
+		~	This is an image that shows the predicted lesion
+		~	Name:
+			>	Predicted-Lesion-Mask.nii.gz
 	o	Thresholded predicted lesion masks
+		~	This is an image of the lesion mask, but voxels have been thresholded.
 		~	Predicted-Lesion-Mask-###.nii.gz
 			>	### is the thermal dose threshold
 	o	DSC numerator files
+		~	This file is used to get the numerator for DSC analysis
 		~	DSC_Num_###.nii.gz
 			>	### is the thermal dose threshold
 	o	DSC denominator files
+		~	This file is used to get the denominator for DSC analysis
 		~	DSC_Denom_###.nii.gz
 			>	### is the thermal dose threshold
 -	Examples
-	o	Process patient 9002
+	o	Process single patient: patient 9002
 		~	./predictLesions.command 9002
-	o	Will process patients 9004, 9005, and 9006
+	o	Process multiple patients: 9004, 9005, and 9006
 		~	./predictLesions.command 9004 9006
--	Possible Thrown Errors:
-	o	The thermal dose maps are not available
 
 
 
@@ -155,28 +163,29 @@ predictLesions (patient 1, patient x)
 
 
 
-genReport (patient 1, patient x)
+genReport (patient x, patient y)
 
 -	Purpose:
-	o	Generates a report for volume and dice co-efficients for the patients
+	o	Generates a report for volume and DSC for the patients
 	o	Operates under three cases:
-		~	Case 1: Generate a report from patients 9002 to 9021. Enter no arguments
-		~	Case 2: Generate a report for a single patient. Enter single argument
-		~	Case 3: Generate a report for a specific range of patients. Enter argument 1 then argument 2
+		~	Case 1: Generate a report for all possible patients. 
+			>	Input no patient number
+		~	Case 2: Generate a report for a single patient. 
+			>	Input single patient number
+		~	Case 3: Generate a report for a range of patients.  * Will process patients from lowest number to highest, incrementally *
+			>	Input two patient numbers, with a space between them, see example below
 -	Input
 	o	Patient 1 - Optional - First or only patient that is needed
 	o	Patient x - Optional - Final patient wanted processing
 -	Output
 	o	Volume-and-DSC-report.csv in Results directory
 -	Examples
-	o	Case 1
+	o	Case 1: Generate a report for all possible patients
 		~	makeLesions user$./genReport.command
-	o	Case 2
+	o	Case 2: Generate a report for a single patient: Patient 9010
 		~	makeLesions user$ ./genReport.command 9010
-	o	Case 3
-		~	makeLesions user$ ./genReport.command 9003 9002
--	Possible Thrown Errors
-	o	Too many inputs
+	o	Case 3: Generate a report for a specific range of patients: Patients 9002 to 9005
+		~	makeLesions user$ ./genReport.command 9002 9005
 
  
 
