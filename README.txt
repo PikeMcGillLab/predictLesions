@@ -5,7 +5,7 @@ Before you begin, make sure:
 	o	This can be accessed by requesting permission from Andre Robichaud: andre.robichaud@ucalgary.ca
 	o	See lab wiki:
 		~	https://sites.google.com/site/qmrilab/tutorials/new-lab-members
-	o	Used to access the files needed to process patients. These files do not need to be copied to your computer. They are accessed either when calling a function or within the function, while it is running. 
+	o	Used to access the files needed to process patients. These files do not need to be copied to your computer. 			They are accessed either when calling a function or within the function, while it is running. 
 	o	Refer to available files section to see what files exist and where they are stored
 	o	Files that are needed to process patients, any files with blank spaces that will be used with FSL are renamed 			while the function is being called.
 		~	Patient zip files
@@ -22,7 +22,7 @@ Before you begin, make sure:
 	o	FLIRT v6.0
 -	In order to produce the predicted lesion masks and generate a final report, the files are assumed to follow the file tree.
 
-
+*Note: As new patients are treated as part of the study, their files will have to be added to predictLesion.command in the subfuction getFiles
 
 Functions:
 -	extractNiftiZipInput2(cmd, zipfile, RigidTransformFile, outFile)
@@ -194,29 +194,29 @@ Erin - emazerol@ucalgary.ca
 Samuel - samuel.pichardo@ucalgary.ca
 
 Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp to PreOp Matrix | Fiesta |   T1   | T1 Mask | Pre-Op T2 Reference Image |
-	| (Samuel)|	(Erin)		   |	   (Samuel)	     |	    (Samuel)	       | 	| (Erin) | (Erin)  |       (Samuel)  		 |
-9001	|   x     |	     x		   |		n/a	     |		n/a	       |  n/a	|   x    |    x    |        n/a                  |
-9002	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
-9003	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
-9004	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
-9005	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
-9006	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
-9007	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
-9008	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
-9009	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
-9010	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
-9011	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
-9012	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|   x    |    x    |        n/a                  |
-9013	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
-9014	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|   x    |    x    |        n/a                  |
-9015	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|   x    |    x    |        n/a                  |
-9016	|   x     |	    n/a		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
-9017	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|   x    |    x    |        n/a                  |
-9018	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|   x    |    x    |        n/a                  |
-9019	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|   x    |    x    |        n/a                  |
-9020	|  n/a    |	    n/a		   |		 x 	     |		 x	       |   x  	|   x    |    x    |        x                    |
-9021	|   x     |	    n/a		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                    |
-9022	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|   x    |    x    |        n/a                  |
+	| (Samuel)|	(Erin)		   |	   (Samuel)	     |	    (Samuel)	       | 	| (Erin) | (Erin)  |       (Samuel)  		   |
+9001	|   x     |	     x		   |		n/a	     |		n/a	       |  n/a	|   x    |    x    |        n/a                    |
+9002	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                      |
+9003	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                      |
+9004	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                      |
+9005	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                      |
+9006	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                      |
+9007	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                      |
+9008	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                      |
+9009	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                      |
+9010	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                      |
+9011	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                      |
+9012	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|  n/a    |   n/a   |        n/a                  |
+9013	|   x     |	     x		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                      |
+9014	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|  n/a    |   n/a   |        n/a                  |
+9015	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|  n/a    |   n/a   |        n/a                  |
+9016	|   x     |	    n/a		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                      |
+9017	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|  n/a    |   n/a   |        n/a                  |                |
+9018	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|  n/a    |   n/a   |        n/a                  |
+9019	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|  n/a    |   n/a   |        n/a                  |
+9020	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|  n/a    |   n/a   |        n/a                  |
+9021	|   x     |	    n/a		   |		 x	     |		 x	       |   x 	|   x    |    x    |        x                      |
+9022	|  n/a    |	    n/a		   |		n/a	     |		n/a	       |  n/a 	|  n/a    |   n/a   |        n/a                  |
 
 
 
@@ -399,11 +399,8 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9011_BB-13042/anat/T1_lesion_mask_filled.nii.gz
 	o	Pre-Op T2 Image
 		~	/Volumes/Pikelab/SPichardo/input/9011 Bb 19000101/study/Sag CUBE T2.nii.gz
--	9012 - Can't run - Missing Fiesta, T2 Pre Op ref image, all matrices
-	o	T1
-		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9012_AT-13418/anat/T1.nii.gz
-	o	T1 Lesion Mask
-		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9012_AT-13418/anat/T1_lesion_mask_filled.nii.gz
+-	9012 - Can't run - Missing all files
+
 -	9013 - Can run
 	o	Zipfile
 		~	/Volumes/Pikelab/SPichardo/ET 9013 - Apr 17 2018.zip
@@ -421,16 +418,10 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9013_JD-13455/anat/T1_lesion_mask_filled.nii.gz
 	o	Pre-Op T2 Image
 		~	/Volumes/Pikelab/SPichardo/input/9013 Jd 19000101/study/Sag CUBE T2.nii.gz
--	9014 - Can't run - Missing Fiesta, T2 Pre Op ref image, all matrices
-	o	T1
-		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9014_DM-13068/anat/T1.nii.gz
-	o	T1 Lesion Mask
-		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9014_DM-13068/anat/T1_lesion_mask_filled.nii.gz
--	9015 - Can't run - Missing Fiesta, T2 Pre Op ref image, all matrices
-	o	T1
-		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9015-DW-13582/anat/T1.nii.gz
-	o	T1 Lesion Mask
-		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9015-DW-13582/anat/T1_lesion_mask_filled.nii.gz
+-	9014 - Can't run - Missing all files
+
+-	9015 - Can't run - Missing all files
+
 -	9016 - Can't run - Missing Post-Op to Pre-Op matrix
 	o	Zipfile
 		~	/Volumes/Pikelab/SPichardo/ET 9016 - Aug 2nd 2018.zip
@@ -446,21 +437,12 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9016_EB-13634/anat/T1_lesion_mask_filled.nii.gz
 	o	Pre-Op T2 Image
 		~	/Volumes/Pikelab/SPichardo/input/9016 Eb 19000101/study/Sag CUBE T2.nii.gz
--	9017 - Can't run - Missing Fiesta, T2 Pre Op ref image, all matrices
-	o	T1
-		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9017_DB-13822/anat/T1.nii.gz
-	o	T1 Lesion Mask
-		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9017_DB-13822/anat/T1_lesion_mask_filled.nii.gz
--	9018 - Can't run - Missing Fiesta, T2 Pre Op ref image, all matrices
-	o	T1
-		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9018_BK-13858/anat/T1.nii.gz
-	o	T1 Lesion Mask
-		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9018_BK-13858/anat/T1_lesion_mask_filled.nii.gz
--	9019 - Can't run - Missing Fiesta, T2 Pre Op ref image, all matrices
-	o	T1
-		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9019_TB-14038/anat/T1.nii.gz
-	o	T1 Lesion Mask
-		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9019_TB-14038/anat/T1_lesion_mask_filled.nii.gz
+-	9017 - Can't run - Missing all files
+
+-	9018 - Can't run - Missing all files
+
+-	9019 - Can't run - Missing all files
+
 -	9020 - Can't run - Missing Post-Op to Pre-Op matrix
 	o	T1
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9020_JL-14121/anat/T1.nii.gz
@@ -489,11 +471,7 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/SPichardo/input/9021 Wm 19000101/study/3D FIESTA.nii.gz
 	o	Pre-Op T2 Image
 		~	/Volumes/Pikelab/SPichardo/input/9021 Wm 19000101/study/Sag CUBE T2.nii.gz
--	9022 - Can't run - Missing Fiesta, T2 Pre Op ref image, all matrices
-	o	T1
-		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9022_JG-14290/anat/T1.nii.gz
-	o	T1 Lesion Mask
-		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9022_JG-14290/anat/T1_lesion_mask_filled.nii.gz
+-	9022 - Can't run - Missing all files
 
 
 
