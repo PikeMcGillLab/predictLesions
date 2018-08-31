@@ -119,7 +119,7 @@ then
 				makeReport $folder $base
 			else
 				echo Thermal dose maps have not been processed into lesion masks for patient $folder
-				exit 12
+
 			fi
 		fi
 		cd ${base}/Patient_Files
