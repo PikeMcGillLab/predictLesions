@@ -1,183 +1,150 @@
 #! /bin/bash
 
+########	Start subfunction: makeReport		#############################
+
+makeReport(){
+
+for i in {1..2} 			#TMap loop
+do
+		
+	line="$folder,TMap $i "
+	cd "$2/Patient_Files/${folder}/Processed_Files/TMap$i/Analysis_Files"
+
+	# Get volume of T1 lesion mask
+	T1="$(fslstats T1_lesion_mask_filled.nii.gz -V)"
+
+	T1_Volume=($(echo "$T1" | tr ' ' '\n'))
+	T1_Vol=${T1_Volume[1]}
+	line="$line,$T1_Vol"
+				
+				
+	for ((var=240;var>=200;var-=10))
+	do
+
+		# Get volume of predicted lesion volume, 
+		Predicted="$(fslstats Predicted-Lesion-Mask-${var}.nii.gz -V)"	
+		Predicted_Volume=($(echo "$Predicted" | tr ' ' '\n'))
+		Predict=${Predicted_Volume[1]}
+
+		# Calculate error between predicted volume and standard volume
+		Error=$(echo "($Predict-$T1_Vol)/$T1_Vol*100" | bc -l)
+		Error=${Error}%
+
+		cd DSC
+		# Next get the DSC data				
+		Numerator="$(fslstats DSC_Num_${var}.nii.gz -V)"
+		Num=($(echo "$Numerator" | tr ' ' '\n'))
+		Denominator="$(fslstats DSC_Denom_${var}.nii.gz -V)"
+		Denom=($(echo "$Denominator" | tr ' ' '\n'))
+
+		# Calculate the DSC
+		N=$(echo ${Num[0]})
+		D=$(echo ${Denom[0]})
+		DSC=$(echo "$N/$D" | bc -l)
+	
+		line="$line,$Predict,$Error,$DSC"	
+		cd ..
+	done # Threshold loop 1
+
+
+	for ((var=160;var>=80;var-=40))
+	do
+					
+		# Get volume of predicted lesion volume, 
+		Predicted="$(fslstats Predicted-Lesion-Mask-${var}.nii.gz -V)"
+		Predicted_Volume=($(echo "$Predicted" | tr ' ' '\n'))
+		Predict=${Predicted_Volume[1]}
+			
+		# Calculate error between predicted volume and standard volume
+		Error=$(echo "($Predict-$T1_Vol)/$T1_Vol*100" | bc -l)
+		Error=${Error}%
+	
+		cd DSC
+		# Next get the DSC data				
+		Numerator="$(fslstats DSC_Num_${var}.nii.gz -V)"
+		Num=($(echo "$Numerator" | tr ' ' '\n'))
+		Denominator="$(fslstats DSC_Denom_${var}.nii.gz -V)"
+		Denom=($(echo "$Denominator" | tr ' ' '\n'))
+
+		# Calculate the DSC
+		N=$(echo ${Num[0]})
+		D=$(echo ${Denom[0]})
+		DSC=$(echo "$N/$D" | bc -l)
+		
+		line="$line,$Predict,$Error,$DSC"	
+		cd ..
+								
+	done # Threshold loop 2
+
+			
+	cd "$analysis_folder"
+	echo "$line" >> Volume-and-DSC-report.csv		
+done #TMap loop
+
+
+} #End makeReport
+
+########	End subfunction: makeReport		#############################
+
+
+
+########	Start Main Function			#############################
+
 base=$(pwd)
+
 analysis_folder=${base}/Results #Place to place the report 
 
-line="Patient,TMap,Standard Volume [mm^3],CEM240 Volume [mm^3],Error,Dice Coefficient,CEM230 Volume [mm^3],Error,Dice Coefficient,CEM220 Volume [mm^3],Error,Dice Coefficient,CEM210 Volume [mm^3],Error,Dice Coefficient,CEM200 Volume [mm^3],Error,Dice Coefficient,CEM160 Volume [mm^3],Error,Dice Coefficient,CEM120 Volume [mm^3],Error,Dice Coefficient,CEM80 Volume [mm^3],Error,Dice Coefficient"
+line="Patient,TMap,T1 Lesion Mask Volume [mm^3],240 CEM43 Volume [mm^3],Error,Dice Coefficient,230 CEM43 Volume [mm^3],Error,Dice Coefficient,220 CEM43 Volume [mm^3],Error,Dice Coefficient,210 CEM43 Volume [mm^3],Error,Dice Coefficient,200 CEM43 Volume [mm^3],Error,Dice Coefficient,160 CEM43 Volume [mm^3],Error,Dice Coefficient,120 CEM43 Volume [mm^3],Error,Dice Coefficient,80 CEM43 Volume [mm^3],Error,Dice Coefficient"
 
-#Place the report in the analysis folder
 cd "$analysis_folder" 
-echo "$line" > TotalReport.csv
+echo "$line" > Volume-and-DSC-report.csv
 
-#Case 1: No inputs, do patients 9002 to 9021
 
-if [[ "$#" -eq 0 ]]
+cd ${base}/Patient_Files
+
+# Case 1: No inputs, do all patients
+if [[ "$#" -eq 0 ]]						# zero input if block
 then
-	for file in {9002..9021}
-	do
-	echo $file
-		if [[ -d $base/Patient_Files/${file} ]] #Check if patients exist
+
+	for FOLDER in 9*/ 					# etects directories or files that start with a 9
+	do 
+   	 	if [[ -d ${FOLDER} ]]				# Check that the found object is a directory
 		then
-			cd "$base/Patient_Files/${file}/Processed_Files"
-				
-			for i in {1..2} #TMap
-			do
-				line="$file,TMap $i "
-				cd "$base/Patient_Files/${file}/Processed_Files/TMap$i/Analysis_Files"
+			folder=$(echo "${FOLDER//[!0-9]/}") 	# Extract all numbers from caught object
+			# Need to see if files have been processed
+			echo $folder
 
-				# Get volume of standard lesion
-
-				Standard="$(fslstats T1_lesion_mask_filled.nii.gz -V)"
-				Standard_Volume=($(echo "$Standard" | tr ' ' '\n'))
-				Std=${Standard_Volume[1]}
-				line="$line,$Std"
-				
-				
-	
-				for ((var=240;var>=200;var-=10))
-				do
-					# Get volume of predicted lesion volume, 
-					Predicted="$(fslstats Predicted-Lesion-Mask-${var}.nii.gz -V)"	
-					Predicted_Volume=($(echo "$Predicted" | tr ' ' '\n'))
-					Predict=${Predicted_Volume[1]}
-
-					# Calculate error between predicted volume and standard volume
-					Error=$(echo "($Predict-$Std)/$Std*100" | bc -l)
-					Error=${Error}%
-
-					cd DSC
-					# Next get the DSC data				
-					Numerator="$(fslstats DSC_Num_${var}.nii.gz -V)"
-					Num=($(echo "$Numerator" | tr ' ' '\n'))
-					Denominator="$(fslstats DSC_Denom_${var}.nii.gz -V)"
-					Denom=($(echo "$Denominator" | tr ' ' '\n'))
-
-					# Calculate the DSC
-					N=$(echo ${Num[0]})
-					D=$(echo ${Denom[0]})
-					DSC=$(echo "$N/$D" | bc -l)
-
-					line="$line,$Predict,$Error,$DSC"	
-					cd ..
-				done # Threshold loop 1
-
-
-				for ((var=160;var>=80;var-=40))
-				do
-					
-					# Get volume of predicted lesion volume, 
-					Predicted="$(fslstats Predicted-Lesion-Mask-${var}.nii.gz -V)"
-					Predicted_Volume=($(echo "$Predicted" | tr ' ' '\n'))
-					Predict=${Predicted_Volume[1]}
+			if  [[ -d $base/Patient_Files/$folder/Processed_Files ]]
+			then
+				makeReport $folder $base
+			else
+				echo Thermal dose maps have not been processed into lesion masks for patient $folder
+				exit 12
+			fi
+		fi
+		cd ${base}/Patient_Files
+	done
 			
-					# Calculate error between predicted volume and standard volume
-					Error=$(echo "($Predict-$Std)/$Std*100" | bc -l)
-					Error=${Error}%
 
-					cd DSC
-					# Next get the DSC data				
-					Numerator="$(fslstats DSC_Num_${var}.nii.gz -V)"
-					Num=($(echo "$Numerator" | tr ' ' '\n'))
-					Denominator="$(fslstats DSC_Denom_${var}.nii.gz -V)"
-					Denom=($(echo "$Denominator" | tr ' ' '\n'))
-
-					# Calculate the DSC
-					N=$(echo ${Num[0]})
-					D=$(echo ${Denom[0]})
-					DSC=$(echo "$N/$D" | bc -l)
-
-					line="$line,$Predict,$Error,$DSC"	
-					cd ..
-								
-				done # Threshold loop 2
-
-			
-				cd "$analysis_folder"
-				echo "$line" >> TotalReport.csv		
-			done #TMap loop
-		fi #check if block
-	done #Patient loop
 
 # Case 2: Generate report for only one patient
 elif [[ "$#" -eq 1 ]]
-then
-	if [[ -d $base/Patient_Files/${1} ]]
-	then		
-		for i in {1..2}
-		do
-			line="$1,TMap $i "
-			cd "$base/Patient_Files/${1}/Processed_Files/TMap$i/Analysis_Files"
-			
-			# Get volume of standard lesion
+then 
+   	if [[ -d $1 ]]						# Check that the found object is a directory
+	then
+		folder=$(echo "${1//[!0-9]/}") 			# Extract all numbers from caught object
+		# Need to see if files have been processed
 
-			Standard="$(fslstats T1_lesion_mask_filled.nii.gz -V)"
-			Standard_Volume=($(echo "$Standard" | tr ' ' '\n'))
-			Std=${Standard_Volume[1]}
+		if  [[ -d $base/Patient_Files/$folder/Processed_Files ]]
+		then
+			makeReport $folder $base
+		else
+			echo Thermal dose maps have not been processed into lesion masks for patient $folder
+			exit 12
+		fi
+	fi
 
-			line="$line,$Std"
-			
-			
-			for ((var=240;var>=200;var-=10))
-			do
-				# Get volume of predicted lesion volume, 
-				Predicted="$(fslstats Predicted-Lesion-Mask-${var}.nii.gz -V)"	
-				Predicted_Volume=($(echo "$Predicted" | tr ' ' '\n'))
-				Predict=${Predicted_Volume[1]}
 
-				# Calculate error between predicted volume and standard volume
-				Error=$(echo "($Predict-$Std)/$Std*100" | bc -l)
-				Error=${Error}%
-				
-				cd DSC
-				# Next get the DSC data				
-				Numerator="$(fslstats DSC_Num_${var}.nii.gz -V)"
-				Num=($(echo "$Numerator" | tr ' ' '\n'))
-				Denominator="$(fslstats DSC_Denom_${var}.nii.gz -V)"
-				Denom=($(echo "$Denominator" | tr ' ' '\n'))
-
-				# Calculate the DSC
-				N=$(echo ${Num[0]})
-				D=$(echo ${Denom[0]})
-				DSC=$(echo "$N/$D" | bc -l)
-
-				line="$line,$Predict,$Error,$DSC"	
-				cd ..
-
-			done # Threshold loop 1
-
-			for ((var=160;var>=80;var-=40))
-			do
-				# Get volume of predicted lesion volume, 
-				Predicted="$(fslstats Predicted-Lesion-Mask-${var}.nii.gz -V)"
-				Predicted_Volume=($(echo "$Predicted" | tr ' ' '\n'))
-				Predict=${Predicted_Volume[1]}
-
-				# Calculate error between predicted volume and standard volume
-				Error=$(echo "($Predict-$Std)/$Std*100" | bc -l)
-				Error=${Error}%
-
-				cd DSC
-				# Next get the DSC data				
-				Numerator="$(fslstats DSC_Num_${var}.nii.gz -V)"
-				Num=($(echo "$Numerator" | tr ' ' '\n'))
-				Denominator="$(fslstats DSC_Denom_${var}.nii.gz -V)"
-				Denom=($(echo "$Denominator" | tr ' ' '\n'))
-
-				# Calculate the DSC
-				N=$(echo ${Num[0]})
-				D=$(echo ${Denom[0]})
-				DSC=$(echo "$N/$D" | bc -l)
-
-				line="$line,$Predict,$Error,$DSC"	
-				cd ..
-				
-			done # Threshold loop 2
-
-			
-			cd "$analysis_folder"
-			echo "$line" >> TotalReport.csv		
-		done #TMap loop
-	fi #End block checking if file exists
 
 #Case 3: Process a range of patients
 elif [[ "$#" -eq 2 ]]
@@ -197,87 +164,35 @@ then
 		B=$2
 	fi	
 
+
 	for ((file=$A;file<=$B;file++))
 	do
 		echo $file
-		if [[ -d $base/Patient_Files/${file} ]]
-		then		
-			for i in {1..2}
-			do
-				line="$file,TMap $i "
-				cd "$base/Patient_Files/${file}/Processed_Files/TMap$i/Analysis_Files"
+   	 	cd ${base}/Patient_Files
 
-				# Get volume of standard lesion
-
-				Standard="$(fslstats T1_lesion_mask_filled.nii.gz -V)"
-				Standard_Volume=($(echo "$Standard" | tr ' ' '\n'))
-				Std=${Standard_Volume[1]}
-				line="$line,$Std"
-
-				for ((var=240;var>=200;var-=10))
-				do
-					# Get volume of predicted lesion volume, 
-					Predicted="$(fslstats Predicted-Lesion-Mask-${var}.nii.gz -V)"	
-					Predicted_Volume=($(echo "$Predicted" | tr ' ' '\n'))
-					Predict=${Predicted_Volume[1]}
-				
-					# Calculate error between predicted volume and standard volume
-					Error=$(echo "($Predict-$Std)/$Std*100" | bc -l)
-					Error=${Error}%
-				
-					cd DSC
-					# Next get the DSC data				
-					Numerator="$(fslstats DSC_Num_${var}.nii.gz -V)"
-					Num=($(echo "$Numerator" | tr ' ' '\n'))
-					Denominator="$(fslstats DSC_Denom_${var}.nii.gz -V)"
-					Denom=($(echo "$Denominator" | tr ' ' '\n'))
-
-					# Calculate the DSC
-					N=$(echo ${Num[0]})
-					D=$(echo ${Denom[0]})
-					DSC=$(echo "$N/$D" | bc -l)
-
-					line="$line,$Predict,$Error,$DSC"	
-					cd ..
-				done # Threshold loop 1
-
-				for ((var=160;var>=80;var-=40))
-				do
-					# Get volume of predicted lesion volume, 
-					Predicted="$(fslstats Predicted-Lesion-Mask-${var}.nii.gz -V)"
-					Predicted_Volume=($(echo "$Predicted" | tr ' ' '\n'))
-					Predict=${Predicted_Volume[1]}
-
-					# Calculate error between predicted volume and standard volume
-					Error=$(echo "($Predict-$Std)/$Std*100" | bc -l)
-					Error=${Error}%
-
-					cd DSC
-					# Next get the DSC data				
-					Numerator="$(fslstats DSC_Num_${var}.nii.gz -V)"
-					Num=($(echo "$Numerator" | tr ' ' '\n'))
-					Denominator="$(fslstats DSC_Denom_${var}.nii.gz -V)"
-					Denom=($(echo "$Denominator" | tr ' ' '\n'))
-
-					# Calculate the DSC
-					N=$(echo ${Num[0]})
-					D=$(echo ${Denom[0]})
-					DSC=$(echo "$N/$D" | bc -l)
-
-					line="$line,$Predict,$Error,$DSC"	
-					cd ..
-								
-				done # Threshold loop 2
-
+		if [[ -d ${file} ]]					# Check that the found object is a directory
+		then
+			folder=$(echo "${file//[!0-9]/}") 		# Extract all numbers from caught object
+			# Need to see if files have been processed
 			
-				cd "$analysis_folder"
-				echo "$line" >> TotalReport.csv		
-				cd "$base/Patient_Files/${file}/Processed_Files"
-			done #TMap loop
-		fi #end if block that checks if patient exists
-	done #Patient loop
+			if [[ $folder -gt 0 ]] && [[ $folder -lt 10000 ]]
+			then
+				exit 12
+			fi	
 
+			if  [[ -d $base/Patient_Files/$folder/Processed_Files ]]
+			then
+				makeReport $folder $base
+			else
+				echo Thermal dose maps have not been processed into lesion masks
+				exit 12
+			fi
+		fi
+	done
+# End case 3
 else
 	echo Please enter 0, 1, or 2 inputs
 
 fi
+
+########	End Main Function			#############################
