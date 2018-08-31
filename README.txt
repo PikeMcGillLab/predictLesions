@@ -11,9 +11,9 @@ Before you begin, make sure:
 		~	Patient zip files
 		~	Post-Operative to T2 Pre-Operative Transformation matrices ~
 		~	Pre-Operative to Intra-Operative Transformation matrices
-		~	Intra-Operative to Pre-Operagive Transformation matrices
-		~	Fiesta Images
-		~	T1 nifti files and 
+		~	Intra-Operative to Pre-Operative Transformation matrices
+		~	FIESTA Images
+		~	T1 images 
 		~	T1 lesion masks
 -	You are using a Mac (tested on OS 10.12.6 and OS 10.13.6)
 -	You have installed MATLAB (tested on 2018a and 2017b)
@@ -29,11 +29,11 @@ Functions:
 	o	MATLAB function
 	o	Takes zip files and turns binary .raw files into three nifti images
 		~	Magnitude, Temperature, and Thermal Dose
--	Volume3.command(patient 1, patient x)
+-	predictLesions.command(patient 1, patient x)
 	o	BASH command
 	o	Processes the output from extractNiftiZipInput2 and produces predicted lesion masks and files for DSC analysis
 	o	Made to work on single patient or multiple patients
--	genReport(patient 1, patient x)
+-	genReport.command(patient 1, patient x)
 	o	BASH command
 	o	Takes the predicted lesion masks and DSC files and turns into .csv report
 
@@ -73,22 +73,21 @@ extractNiftiZipInput2(cmd, zipfile, RigidTransformFile)
 		~ 	Requires Pikelab
 -	Outputs
 	o	Magnitude Maps
-		~	Low resolution image showing the structures of the patient's brain
-		~	This image is a 4D representation of slices of the patient's brain
+		~	Low resolution 4D image showing the structures of the patient's brain
 		~	Default Names:
 			>	IntraOp-Magnitude#-Sonication_#.nii.gz
 			>	PreOp-Magnitude#-Sonication_#.nii.gz
 	o	Temperature Maps
-		~	Image showing the temperatures within the patients brain
-		~	This image is a 4D representation of slices of the temperature of the patient's brain
+		~	4D image showing the temperatures within the patient's brain
 		~	Default Names:
 			>	IntraOp-Thermal#-Sonication_#.nii.gz
 			>	PreOp-Thermal#-Sonication_#.nii.gz
 	o	Thermal Dose Maps
-		~	Image of the thermal dose of the patients brain.
+		~	Image of the thermal dose of the patient's brain.
 		~	Thermal dose is measured in cumulative equivalent minutes at 43 celcius (CEM43)
 		~	See /Volumes/Pikelab/MTaylor/MRgFUS_Report.pdf for more information on CEM43
 		~ 	Default Names:
+			> 	TODO NOTE: THESE NAMES SHOULD BE CHANGED TO IntraOp-CEM43-TMap#-Sonication#.nii.gz, PreOp-CEM43-TMap#-Sonication#.nii.gz  
 			>	IntraOp-CEM240-#-Sonication_#.nii.gz
 			>	PreOp-CEM240-#-Sonication_#.nii.gz
 -	Examples - Use within MATLAB. 
@@ -237,7 +236,7 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 	o	T1
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9001_SH-11644/anat/T1.nii.gz
 	o	T1 Lesion Mask
-		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9001_SH-11644/anat/ T1_lesion_mask_filled.nii.gz
+		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9001_SH-11644/anat/T1_lesion_mask_filled.nii.gz
 -	9002 - Can run
 	o	Zipfile
 		~	/Volumes/Pikelab/SPichardo/ET 9002 - June 15 2017.zip
@@ -408,7 +407,8 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9011_BB-13042/anat/T1_lesion_mask_filled.nii.gz
 	o	Pre-Op T2 Image
 		~	/Volumes/Pikelab/SPichardo/input/9011 Bb 19000101/study/Sag CUBE T2.nii.gz
--	9012 - Can't run - Missing all files
+
+-	9012 - patient excluded
 
 -	9013 - Can run
 	o	Zipfile
@@ -427,9 +427,9 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9013_JD-13455/anat/T1_lesion_mask_filled.nii.gz
 	o	Pre-Op T2 Image
 		~	/Volumes/Pikelab/SPichardo/input/9013 Jd 19000101/study/Sag CUBE T2.nii.gz
--	9014 - Can't run - Missing all files
+-	9014 - patient excluded
 
--	9015 - Can't run - Missing all files
+-	9015 - patient excluded
 
 -	9016 - Can't run - Missing Post-Op to Pre-Op matrix
 	o	Zipfile
@@ -446,9 +446,9 @@ Patient	| ZipFile | PostOp to PreOp Matrix | PreOp to IntraOp Matrix | IntraOp t
 		~	/Volumes/Pikelab/MRGFUS-shared/analysis_lesion_masks/9016_EB-13634/anat/T1_lesion_mask_filled.nii.gz
 	o	Pre-Op T2 Image
 		~	/Volumes/Pikelab/SPichardo/input/9016 Eb 19000101/study/Sag CUBE T2.nii.gz
--	9017 - Can't run - Missing all files
+-	9017 - patient excluded
 
--	9018 - Can't run - Missing all files
+-	9018 - patient excluded
 
 -	9019 - Can't run - Missing all files
 
