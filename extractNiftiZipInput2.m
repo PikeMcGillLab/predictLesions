@@ -1,16 +1,15 @@
 % This is the main function that produces the magnitude, temperature, and
 % thermal dose maps
 
+%xml2struct used in subfunction readxml was programmed by Douglas M. Schwarz
+%it is taken from part of the github repository: https://github.com/kndiaye/matlab
 
-%Difference between v1 and v2
-%Arguement order: Was cmd, cmd2, zip, out, rigid. Now: cmd, cmd2, zip,
-%rigid, out
-%Outfile is now optional
-%Reason: allows for the file tree structure to be easily maintained
-%Removed problem line on 144 that was throwing errors
+%nii_tool used in subfunctions: MakeRawNifties, CommonNifti, and
+%SaveNifties was programmed by Xiang Ruili
+%It is taken from github repository: https://github.com/xiangruili/dicm2nii
 
 
-function extractNiftiZipInput2(cmd,zipfile,RigidTransformFile,outFile)
+function extractNiftiZipInput2(cmd,zipfile,RigidTransformFile)
 
  %First bit is for testing and using any default bits
  %Add unit testing
@@ -19,7 +18,7 @@ function extractNiftiZipInput2(cmd,zipfile,RigidTransformFile,outFile)
 if nargin==0
     cmd = 'all';
     zipfile='ET 9002 - June 15 2017.zip';
-    outFile = '/Users/spichardo/Downloads/ET 9002 Thermal Data';
+%    outFile = '/Users/spichardo/Downloads/ET 9002 Thermal Data';
     RigidTransformFile='9002-RXYZ-PreTreat-To-IntraOp.RAS';
 end
 
@@ -36,28 +35,21 @@ end
 cmd= lower(cmd);
 cmd= strtrim(cmd);
 
-% cmd1=lower(cmd2);
-% cmd2=strtrim(cmd1);
-
-
+% Make the directory name for patient files
 path=RigidTransformFile(numel(RigidTransformFile)-32:numel(RigidTransformFile));
 path=path(1:4);
-
-if ~exist('outFile','var')
-     % third parameter does not exist, so default is set
-     outFile = fullfile(pwd,'Patient_Files',path);
-end
-
-%if exist(fullfile(pwd,'Patient_Files'))==0
-%    mkdir Patient_Files;
-%    mkdir(fullfile(pwd,'Patient_Files',path));
-%elseif exist(fullfile(pwd,'Patient_Files',path))==0
-%    mkdir(fullfile(pwd,'Patient_Files',path));
-%end
+outFile = fullfile(pwd,'Patient_Files',path);
 
 
-%If user wants temperature maps, input command: 'tempMap', If user wants
-%magnitudes use command: 'magMap'. If user wants both use: 'all'
+
+%If user wants only temperature maps, use command 'temp'. If user wants
+%only magnitude maps, use command 'mag'. If user only wants thermal dose
+%maps, use command 'dose'. If user wants temperature maps and magnitude
+%maps, use command 'temp&mag'. If user wants temperature maps and thermal
+%dose maps, use command 'temp&dose'. If user wants thermal dose maps and 
+%magnitude maps, use command 'mag&dose'. If user wants temperature maps,
+%magnitude maps, and thermal dose maps, use command 'all'
+
 if ( strcmp('temp',cmd) == 0 ) && (strcmp('mag',cmd)==0) && (strcmp('dose',cmd)==0)  && (strcmp('temp&dose',cmd)==0) && (strcmp('temp&mag',cmd)==0) && (strcmp('mag&dose',cmd)==0) && (strcmp('all',cmd)==0)
     string = strcat(cmd, ' is not a valid opetion, select from the provided options: thermal, magnitude, or all');
     error(string);
@@ -101,13 +93,13 @@ try
             [NiftiMag2_IntraOp,NiftiMag2_PreOp]=CommonNifti(RawNiftiMag2,Coords,SqueezedFiles(i).MagnitudeCount,ProcessedFiles(i).Orientation,'magnitude',IntraOpMat);
         end
         
-        if strcmp(cmd,'temp') || strcmp(cmd,'temp&dose') || strcmp(cmd,'temp&mag') || strcmp(cmd,'all')
+        if strcmp(cmd,'temp') || strcmp(cmd,'temp&dose') || strcmp(cmd,'temp&mag') || strcmp(cmd,'all') || strcmp(cmd,'dose')|| strcmp(cmd,'mag&dose')
             [NiftiTherm1_IntraOp,NiftiTherm1_PreOp]=CommonNifti(RawNiftiTherm1,Coords,SqueezedFiles(i).ThermalCount,ProcessedFiles(i).Orientation,'thermal',IntraOpMat);
             [NiftiTherm2_IntraOp,NiftiTherm2_PreOp]=CommonNifti(RawNiftiTherm2,Coords,SqueezedFiles(i).ThermalCount,ProcessedFiles(i).Orientation,'thermal',IntraOpMat);
         end
         
         if strcmp(cmd,'dose') || strcmp(cmd,'temp&dose') || strcmp(cmd,'mag&dose') || strcmp(cmd,'all')
-            NiftiThermDose1_IntraOp =NiftiTherm1_IntraOp;
+            NiftiThermDose1_IntraOp = NiftiTherm1_IntraOp;
             NiftiThermDose2_IntraOp = NiftiTherm2_IntraOp;
             NiftiThermDose1_PreOp = NiftiTherm1_PreOp;
             NiftiThermDose2_PreOp = NiftiTherm2_PreOp;
@@ -271,9 +263,6 @@ end %PIF
 
 % This function gets the XML data
 function [chars,xml] = ReadXML(File)
-
-%xml2struct was programmed by Douglas M. Schwarz
-%it is taken from part of the github repository: https://github.com/kndiaye/matlab
 
 chars=xml2struct([File, filesep, 'SonicationSummary.xml']);
 xml=xml2struct([File, filesep,'MriImageParams.xml']);
